@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Cursor="Arrow">
     <Grid Cursor="Arrow">
-        <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False" CanUserDeleteRows="False"
+        <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False"  CanUserDeleteRows="False"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Publiceringsdatum">
@@ -41,7 +41,7 @@
                 <DataGridTextColumn Header="Volym" Binding="{Binding Path=Volym}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Volymsenhet" Binding="{Binding Path=Volymsenhet}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Pris" Binding="{Binding Path=Pris}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Totalt" Binding="{Binding Path=Totalt}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Totalt" Binding="{Binding Path=Totalt,StringFormat='#,0.00'}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Valuta" Binding="{Binding Path=Valuta}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Antal Affärer" Binding="{Binding Path=Antal_Affärer}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Handelsplats" Binding="{Binding Path=Handelsplats}"></DataGridTextColumn>
@@ -52,7 +52,7 @@
 
 
         </DataGrid>
-        <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Height="105" Width="191" AutomationProperties.Name="button1" Cursor="None" Click="Button1_Click"/>
+        <Button x:Name="button1" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Height="105" Width="191" AutomationProperties.Name="button1" Cursor="None" Click="Button1_Click"/>
         <CheckBox x:Name="CheckBox1" Content="CheckBox" HorizontalAlignment="Left" Margin="24,202,0,0" VerticalAlignment="Top" Cursor="None"/>
         <CheckBox x:Name="CheckBox2" Content="CheckBox" HorizontalAlignment="Left" Margin="24,222,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="CheckBox3" Content="CheckBox" HorizontalAlignment="Left" Margin="24,242,0,0" VerticalAlignment="Top"/>
