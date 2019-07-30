@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿//using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +44,7 @@ namespace FIWebScraper_netcore3._0
             scraper = new Scraper();
             MainWindow1.Title = "Insynshandelsavläsare";
             ListOfAlertMessagesSent = new List<string>();
+            //dataGridView1.Columns[14].CellStyle = $"{0:N}";
             //dataGridView1.Columns[14].DefaultCellStyle.Format = $"{0:N}";
 
         }
