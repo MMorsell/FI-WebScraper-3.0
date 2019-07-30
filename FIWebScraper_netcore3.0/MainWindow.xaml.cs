@@ -27,7 +27,6 @@ namespace FIWebScraper_netcore3._0
     {
         Scraper scraper;
         static int textData = 0;
-        BindingSource source;
         public decimal SecondsDelay { get; set; } = 5000;
         public int MaxValueBeforeAResponse { get; set; } = 300000;
         public List<string> ListOfAlertMessagesSent { get; set; }
@@ -86,7 +85,6 @@ namespace FIWebScraper_netcore3._0
                 //    source.ResetBindings(false);
                 //}
 
-                dataGridView1.Items.Refresh();
                 dataGridView1.ItemsSource = null;
                 dataGridView1.ItemsSource = scraper.Sales;
 
