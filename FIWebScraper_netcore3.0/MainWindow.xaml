@@ -7,7 +7,51 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Cursor="Arrow">
     <Grid Cursor="Arrow">
-        <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False" CanUserDeleteRows="False"/>
+        <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False" CanUserDeleteRows="False"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Publiceringsdatum">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Publiceringsdatum,StringFormat=yyyy-MM-dd}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Tid">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Tid,StringFormat=HH:mm:ss}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Utgivare" Binding="{Binding Path=Utgivare}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Person i ledande ställning" Binding="{Binding Path=Namn}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Befattning" Binding="{Binding Path=Befattning}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Närstående" Binding="{Binding Path=Närstående}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Karaktär" Binding="{Binding Path=Karaktär}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Instrumentnamn" Binding="{Binding Path=Instrumentnamn}"></DataGridTextColumn>
+                <DataGridTextColumn Header="ISIN" Binding="{Binding Path=ISIN}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Transaktionsdatum">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Transaktionsdatum,StringFormat=yyyy-MM-dd}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Volym" Binding="{Binding Path=Volym}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Volymsenhet" Binding="{Binding Path=Volymsenhet}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Pris" Binding="{Binding Path=Pris}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Totalt" Binding="{Binding Path=Totalt}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Valuta" Binding="{Binding Path=Valuta}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Antal Affärer" Binding="{Binding Path=Antal_Affärer}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Handelsplats" Binding="{Binding Path=Handelsplats}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Detaljer" Binding="{Binding Path=Detaljer}"></DataGridTextColumn>
+
+            </DataGrid.Columns>
+
+
+        </DataGrid>
         <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Height="105" Width="191" AutomationProperties.Name="button1" Cursor="None" Click="Button1_Click"/>
         <CheckBox x:Name="CheckBox1" Content="CheckBox" HorizontalAlignment="Left" Margin="24,202,0,0" VerticalAlignment="Top" Cursor="None"/>
         <CheckBox x:Name="CheckBox2" Content="CheckBox" HorizontalAlignment="Left" Margin="24,222,0,0" VerticalAlignment="Top"/>
