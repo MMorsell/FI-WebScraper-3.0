@@ -44,8 +44,6 @@ namespace FIWebScraper_netcore3._0
             scraper = new Scraper();
             MainWindow1.Title = "Insynshandelsavläsare";
             ListOfAlertMessagesSent = new List<string>();
-            //dataGridView1.Columns[14].CellStyle = $"{0:N}";
-            //dataGridView1.Columns[14].DefaultCellStyle.Format = $"{0:N}";
 
         }
 
@@ -56,53 +54,48 @@ namespace FIWebScraper_netcore3._0
             //Primary loop
             while (textData % 2 != 0)
             {
-                //tries to download the new version
-                try
-                {
-                    //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
-                    scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+                
 
-                }
-                catch
-                {
-                    if (reportErrorMessagesNumber != 5)
-                    {
-                        reportErrorMessages.AppendLine($"Misslyckad uppdatering {DateTime.Now.ToString("HH:mm:ss")}");
-                        textBox3.Text = reportErrorMessages.ToString();
-                        reportErrorMessagesNumber++;
-
-                        int.TryParse(SecondsDelay.ToString(), out int timeout2);
-                        await Task.Delay(timeout2);
-                    }
-                    else
-                    {
-                        reportErrorMessages.Clear();
-                        reportErrorMessagesNumber = 0;
-                    }
-                }
                 //Updates the data
-                //if (dataGridView1.Enabled == false)
-                //{
-                //    source.ResetBindings(false);
-                //}
-
                 dataGridView1.ItemsSource = null;
                 dataGridView1.ItemsSource = scraper.Sales;
+                MainWindow1.Title = "Här";
+
+                
+                //tries to download the new version
+                //try
+                //{
+                    //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                    scraper.ScrapeData(@"http://localhost/dashboard/");
+
+                //}
+                //catch
+                //{
+                //    if (reportErrorMessagesNumber != 5)
+                //    {
+                //        reportErrorMessages.AppendLine($"Misslyckad uppdatering {DateTime.Now.ToString("HH:mm:ss")}");
+                //        textBox3.Text = reportErrorMessages.ToString();
+                //        reportErrorMessagesNumber++;
+
+                //        int.TryParse(SecondsDelay.ToString(), out int timeout2);
+                //        await Task.Delay(timeout2);
+                //    }
+                //    else
+                //    {
+                //        reportErrorMessages.Clear();
+                //        reportErrorMessagesNumber = 0;
+                //    }
+                //}
+
 
                 ControlAllCheckStates();
-
-                //dataGridView1.ClearSelection();
-
 
                 //Delay until next update
                 int.TryParse(SecondsDelay.ToString(), out int timeout);
                 await Task.Delay(timeout);
-            }
+                MainWindow1.Title = "Där";
 
-            //if (dataGridView1.Enabled == false)
-            //{
-            //    ControlAllCheckStates();
-            //}
+            }
         }
 
         private void CheckTextData()
@@ -112,16 +105,11 @@ namespace FIWebScraper_netcore3._0
             {
                 button1.Content = "Pause";
                 MainWindow1.Title = "Programmet Körs";
-                //dataGridView1.Enabled = false;
-                //dataGridView1.Enabled = true;
-                //dataGridView1.ClearSelection();
             }
             else
             {
                 button1.Content = "Start";
                 MainWindow1.Title = "Insynshandelsavläsare";
-                //dataGridView1.Enabled = true;
-                //dataGridView1.ClearSelection();
             }
         }
 
@@ -273,13 +261,6 @@ namespace FIWebScraper_netcore3._0
 
             return result;
         }
-
-        private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            decimal.TryParse(minutesDelayInput.Text, out decimal input);
-            SecondsDelay = 1000 * input;
-        }
-
         private void UpdateCellColors()
         {
             //source.SuspendBinding();
@@ -310,14 +291,6 @@ namespace FIWebScraper_netcore3._0
             //    }
             //}
             //source.ResumeBinding();
-        }
-
-        private void NumericUpDown2_ValueChanged(object sender, EventArgs e)
-        {
-            int.TryParse(ValueBeforeAlertInput.Text, out int input);
-            MaxValueBeforeAResponse = input;
-            UpdateCellColors();
-            PushNotice();
         }
 
         private void CheckBox1_CheckStateChanged(object sender, EventArgs e)
@@ -393,6 +366,30 @@ namespace FIWebScraper_netcore3._0
         private void DataGridView1_Click(object sender, EventArgs e)
         {
             ControlAllCheckStates();
+        }
+
+        private void WarningValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int.TryParse(warningValue.Text, out int input);
+            if (input != 0)
+            {
+                MaxValueBeforeAResponse = input;
+                MainWindow1.Title = "CoolFronWarning";
+                UpdateCellColors();
+                PushNotice();
+
+            }
+        }
+        
+        private void SelcondsDelayInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            decimal.TryParse(selcondsDelayInput.Text, out decimal input);
+            if (input != 0)
+            {
+                SecondsDelay = 1000 * input;
+                MainWindow1.Title = "Cool";
+
+            }
         }
     }
 }

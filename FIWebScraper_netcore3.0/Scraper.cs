@@ -37,8 +37,18 @@ namespace FIWebScraper_netcore3._0
             int nextPost = 0;
             for (int i = 0; i < 10; i++)
             {
+                DateTime publishDateParsed = new DateTime();
                 //Creates a new sale
-                DateTime.TryParse(listOfText[0 + nextPost], out DateTime publishDateParsed);
+                try
+                {
+
+                    DateTime.TryParse(listOfText[0 + nextPost], out publishDateParsed);
+
+                }
+                catch
+                {
+                    Console.Read();
+                }
                 var timeNow = DateTime.Now.ToString("HH:mm:ss");
                 DateTime.TryParse(listOfText[8 + nextPost], out DateTime transactionDateParsed);
                 double.TryParse(listOfText[9 + nextPost], out double volymParsed);
