@@ -131,6 +131,9 @@ namespace FIWebScraper_netcore3._0
                 notificationManager.Show("Nytt köp av Viktor myehsekk", onClick: () => this.WindowState = WindowState.Maximized,
                onClose: () => Console.WriteLine("Closed!"));
 
+                //Måste "flytta" ner alla poster....
+                scraper.AddedSales[0].Namn = "Martin";
+
             }
         }
 
