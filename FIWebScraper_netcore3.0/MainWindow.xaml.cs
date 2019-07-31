@@ -77,8 +77,8 @@ namespace FIWebScraper_netcore3._0
                 //tries to download the new version
                 //try
                 //{
-                    scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
-                    //scraper.ScrapeData(@"http://localhost/dashboard/");
+                    //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                    scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
 
                 //}
                 //catch
