@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Cursor="Arrow">
     <Grid Cursor="Arrow">
-        <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False"  CanUserDeleteRows="False"
+        <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Publiceringsdatum">

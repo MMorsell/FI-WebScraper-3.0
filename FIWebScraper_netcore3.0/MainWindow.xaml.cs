@@ -69,10 +69,6 @@ namespace FIWebScraper_netcore3._0
                     dataGridView1.ItemsSource = null;
                     dataGridView1.ItemsSource = scraper.Sales;
                 }
-
-
-                MainWindow1.Title = "Här";
-
                 
                 //tries to download the new version
                 //try
@@ -105,7 +101,6 @@ namespace FIWebScraper_netcore3._0
                 //Delay until next update
                 int.TryParse(SecondsDelay.ToString(), out int timeout);
                 await Task.Delay(timeout);
-                MainWindow1.Title = "Där";
 
             }
         }
