@@ -17,6 +17,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Reflection;
+using Notifications.Wpf;
 
 namespace FIWebScraper_netcore3._0
 {
@@ -46,6 +47,7 @@ namespace FIWebScraper_netcore3._0
             MainWindow1.Title = "Insynshandelsavläsare";
             ListOfAlertMessagesSent = new List<string>();
 
+
         }
 
         private async void Button1_Click(object sender, RoutedEventArgs e)
@@ -69,12 +71,37 @@ namespace FIWebScraper_netcore3._0
                     dataGridView1.ItemsSource = null;
                     dataGridView1.ItemsSource = scraper.Sales;
                 }
-                
+
                 //tries to download the new version
                 //try
                 //{
-                    //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
-                    scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+
+                var notificationManager = new NotificationManager();
+
+                //var notis = new NotificationContent();
+                //notis.Title = "sample";
+                //notis.Message = "babababbba";
+                //notis.Type = NotificationType.Information;
+
+                //notificationManager.Show(notis);
+                //notificationManager.Show(new NotificationContent
+                //{
+                //    Title = "Sample notification",
+                //    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+
+                //    Type = NotificationType.Success
+                //});
+
+                // notificationManager.Show()
+
+
+
+                //notificationManager.Show(
+                //new NotificationContent { Title = "Notification", Message = "Notification in window!" },
+                //areaName: "WindowArea");
+
+                //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
 
                 //}
                 //catch
@@ -101,6 +128,8 @@ namespace FIWebScraper_netcore3._0
                 //Delay until next update
                 int.TryParse(SecondsDelay.ToString(), out int timeout);
                 await Task.Delay(timeout);
+                notificationManager.Show("Nytt köp av Viktor myehsekk", onClick: () => this.WindowState = WindowState.Maximized,
+               onClose: () => Console.WriteLine("Closed!"));
 
             }
         }
@@ -206,6 +235,7 @@ namespace FIWebScraper_netcore3._0
 
         private void PushNotice()
         {
+            //NotifyIcon notifyIcon = new NotifyIcon()
             //for (int i = 0; i < dataGridView1.Rows.Count; i++)
             //{
             //    double.TryParse(dataGridView1.Rows[i].Cells[14].Value.ToString(), out double totalt);

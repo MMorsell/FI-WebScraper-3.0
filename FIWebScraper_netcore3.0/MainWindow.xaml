@@ -10,7 +10,7 @@
         <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Publiceringsdatum">
+                <DataGridTemplateColumn Header="Datum">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=Publiceringsdatum,StringFormat=yyyy-MM-dd}"></TextBlock>
@@ -38,10 +38,49 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Volym" Binding="{Binding Path=Volym}"></DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding Path=Volym}">
+                    <DataGridTextColumn.Header>
+                        <TextBlock>
+                    Volym
+                        </TextBlock>
+                    </DataGridTextColumn.Header>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
                 <DataGridTextColumn Header="Volymsenhet" Binding="{Binding Path=Volymsenhet}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Pris" Binding="{Binding Path=Pris}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Totalt" Binding="{Binding Path=Totalt,StringFormat='#,0.00'}"></DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding Path=Pris}">
+                    <DataGridTextColumn.Header>
+                        <TextBlock>
+                    Pris
+                        </TextBlock>
+                    </DataGridTextColumn.Header>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+
+                <DataGridTextColumn Binding="{Binding Path=Totalt}">
+                    <DataGridTextColumn.Header>
+                        <TextBlock>
+                    Totalt
+                        </TextBlock>
+                    </DataGridTextColumn.Header>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
                 <DataGridTextColumn Header="Valuta" Binding="{Binding Path=Valuta}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Antal Affärer" Binding="{Binding Path=Antal_Affärer}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Handelsplats" Binding="{Binding Path=Handelsplats}"></DataGridTextColumn>
@@ -64,6 +103,8 @@
         <TextBox x:Name="selcondsDelayInput" HorizontalAlignment="Left" TextChanged="SelcondsDelayInput_TextChanged" TextAlignment="Center" Margin="60,110,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="59"/>
         <TextBox x:Name="ValueBeforeAlertInput" HorizontalAlignment="Left" Margin="36,176,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
+        
+        
 
     </Grid>
 </Window>
