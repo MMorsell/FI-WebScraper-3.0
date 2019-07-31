@@ -38,6 +38,7 @@ namespace FIWebScraper_netcore3._0
         public bool DisableColor { get; set; } = false;
         StringBuilder reportErrorMessages = new StringBuilder();
         public int reportErrorMessagesNumber { get; set; }
+        public bool CombineMultipleSales { get; set; } = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -54,11 +55,22 @@ namespace FIWebScraper_netcore3._0
             //Primary loop
             while (textData % 2 != 0)
             {
-                
+
 
                 //Updates the data
-                dataGridView1.ItemsSource = null;
-                dataGridView1.ItemsSource = scraper.Sales;
+
+                if (!CombineMultipleSales)
+                {
+                    dataGridView1.ItemsSource = null;
+                    dataGridView1.ItemsSource = scraper.AddedSales;
+                }
+                else
+                {
+                    dataGridView1.ItemsSource = null;
+                    dataGridView1.ItemsSource = scraper.Sales;
+                }
+
+
                 MainWindow1.Title = "Här";
 
                 
@@ -351,16 +363,16 @@ namespace FIWebScraper_netcore3._0
 
         private void CheckBox5_CheckStateChanged_1(object sender, EventArgs e)
         {
-            if (CheckBox5.IsChecked.GetValueOrDefault())
-            {
-                DisableColor = true;
-            }
-            else
-            {
-                DisableColor = false;
-            }
+            //if (CheckBox5.IsChecked.GetValueOrDefault())
+            //{
+            //    DisableColor = true;
+            //}
+            //else
+            //{
+            //    DisableColor = false;
+            //}
 
-            ControlAllCheckStates();
+            //ControlAllCheckStates();
         }
 
         private void DataGridView1_Click(object sender, EventArgs e)
@@ -390,6 +402,22 @@ namespace FIWebScraper_netcore3._0
                 MainWindow1.Title = "Cool";
 
             }
+        }
+
+        private void CombineMultipleSales_Checked(object sender, RoutedEventArgs e)
+        {
+            MainWindow1.Title = "Cool";
+            CombineMultipleSales = true;
+            dataGridView1.ItemsSource = null;
+            dataGridView1.ItemsSource = scraper.AddedSales;
+        }
+
+        private void CombineMultipleSales_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MainWindow1.Title = "Not Cool";
+            CombineMultipleSales = false;
+            dataGridView1.ItemsSource = null;
+            dataGridView1.ItemsSource = scraper.Sales;
         }
     }
 }
