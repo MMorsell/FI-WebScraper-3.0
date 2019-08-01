@@ -129,6 +129,9 @@ namespace FIWebScraper_netcore3._0
                         Sales[0].Detaljer = sale.Detaljer;
 
 
+
+                        FIWebScraper_netcore3._0.MainWindow.PushNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris}");
+
                     }
                 }
 
@@ -221,7 +224,6 @@ namespace FIWebScraper_netcore3._0
 
             if (!recordExistInSaleList && !entryAlreadyExistsInAddedList)
             {
-
                 foreach (var record in Sales)
                 {
                     if (sale.Utgivare == record.Utgivare && sale.Namn == record.Namn && sale.Befattning == record.Befattning && sale.Karaktär == record.Karaktär && sale.Instrumentnamn == record.Instrumentnamn)
@@ -256,7 +258,7 @@ namespace FIWebScraper_netcore3._0
                         AddedSales[0].Status = sale.Status;
                         AddedSales[0].Detaljer = sale.Detaljer;
 
-
+                        FIWebScraper_netcore3._0.MainWindow.PushNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris}");
 
 
                     }

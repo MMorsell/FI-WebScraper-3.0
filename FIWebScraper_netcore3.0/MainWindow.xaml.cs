@@ -30,8 +30,7 @@ namespace FIWebScraper_netcore3._0
         static int textData = 0;
         public decimal SecondsDelay { get; set; } = 5000;
         public int MaxValueBeforeAResponse { get; set; } = 300000;
-        public List<string> ListOfAlertMessagesSent { get; set; }
-
+        static List<string> ListOfPopupMessages = new List<string>();
         public bool ReportOnlyPurchases { get; set; } = false;
         public bool SendPushNotice { get; set; } = true;
         public bool ShowOnlySalesRows { get; set; } = false;
@@ -45,60 +44,23 @@ namespace FIWebScraper_netcore3._0
             InitializeComponent();
             scraper = new Scraper();
             MainWindow1.Title = "Insynshandelsavläsare";
-            ListOfAlertMessagesSent = new List<string>();
-
-
+            ListOfPopupMessages = new List<string>();
         }
 
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
+            var notificationManager = new NotificationManager();
             CheckTextData();
 
-            //Primary loop
+////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
             while (textData % 2 != 0)
             {
-
-
-                //Updates the data
-
-                if (!CombineMultipleSales)
-                {
-                    dataGridView1.ItemsSource = null;
-                    dataGridView1.ItemsSource = scraper.AddedSales;
-                }
-                else
-                {
-                    dataGridView1.ItemsSource = null;
-                    dataGridView1.ItemsSource = scraper.Sales;
-                }
+                UpdateDataGrid();
+               
 
                 //tries to download the new version
                 //try
                 //{
-
-                var notificationManager = new NotificationManager();
-
-                //var notis = new NotificationContent();
-                //notis.Title = "sample";
-                //notis.Message = "babababbba";
-                //notis.Type = NotificationType.Information;
-
-                //notificationManager.Show(notis);
-                //notificationManager.Show(new NotificationContent
-                //{
-                //    Title = "Sample notification",
-                //    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-
-                //    Type = NotificationType.Success
-                //});
-
-                // notificationManager.Show()
-
-
-
-                //notificationManager.Show(
-                //new NotificationContent { Title = "Notification", Message = "Notification in window!" },
-                //areaName: "WindowArea");
 
                 //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
                 scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
@@ -123,17 +85,54 @@ namespace FIWebScraper_netcore3._0
                 //}
 
 
+
+
+                //notificationManager.Show("mes", onClick: () => this.WindowState = WindowState.Maximized);
+
+
                 ControlAllCheckStates();
+
+
+                if (ListOfPopupMessages.Count != 0)
+                {
+                    foreach (var message in ListOfPopupMessages)
+                    {
+
+                    var notice = new NotificationContent();
+                    notice.Title = "Ny affär hittad!";
+                    notice.Message = message;
+                    notice.Type = NotificationType.Information;
+                  
+                    notificationManager.Show(notice, onClick: () => this.WindowState = WindowState.Maximized);
+                    }
+                    ListOfPopupMessages.Clear();
+                }
+
+
 
                 //Delay until next update
                 int.TryParse(SecondsDelay.ToString(), out int timeout);
                 await Task.Delay(timeout);
-               // notificationManager.Show("Nytt köp av Viktor myehsekk", onClick: () => this.WindowState = WindowState.Maximized,
-               //onClose: () => Console.WriteLine("Closed!"));
 
-               // //Måste "flytta" ner alla poster....
-               // scraper.AddedSales[0].Namn = "Martin";
 
+
+
+            }
+////////////////////////////////////////////////////End Primary loop////////////////////////////////////////////////////////////////////////////////////
+
+        }
+
+        private void UpdateDataGrid()
+        {
+            if (!CombineMultipleSales)
+            {
+                dataGridView1.ItemsSource = null;
+                dataGridView1.ItemsSource = scraper.AddedSales;
+            }
+            else
+            {
+                dataGridView1.ItemsSource = null;
+                dataGridView1.ItemsSource = scraper.Sales;
             }
         }
 
@@ -172,7 +171,6 @@ namespace FIWebScraper_netcore3._0
 
 
             UpdateCellColors();
-            PushNotice();
         }
 
         private void DisplayOnlySelectedData()
@@ -236,70 +234,9 @@ namespace FIWebScraper_netcore3._0
             //source.ResumeBinding();
         }
 
-        private void PushNotice()
+        public static void PushNotice(string message)
         {
-            //NotifyIcon notifyIcon = new NotifyIcon()
-            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //{
-            //    double.TryParse(dataGridView1.Rows[i].Cells[14].Value.ToString(), out double totalt);
-
-            //    if (totalt > MaxValueBeforeAResponse)
-            //    {
-            //        //Add numberformat here
-            //        //string formattedTotal = $"{0:N}";
-            //        //string msg = string.Format(formattedTotal, totalt);
-            //        string message = $"{dataGridView1.Rows[i].Cells[3].Value} har {dataGridView1.Rows[i].Cells[6].Value} till ett värde av {totalt} på {dataGridView1.Rows[i].Cells[7].Value}";
-            //        NotifyIcon notifyIcon = new NotifyIcon
-            //        {
-            //            Visible = true,
-            //            BalloonTipTitle = $"Ny Affär av {dataGridView1.Rows[i].Cells[3].Value}",
-            //            BalloonTipText = message,
-            //            Icon = SystemIcons.Application
-            //        };
-
-
-            //        bool alreadySentAlert = CheckIfMessageIsAlreadySent(message);
-
-            //        if (!alreadySentAlert && SendPushNotice)
-            //        {
-
-
-            //            if (ReportOnlyPurchases)
-            //            {
-            //                if (dataGridView1.Rows[i].Cells[6].Value.ToString().Equals("Förvärv", StringComparison.CurrentCultureIgnoreCase))
-            //                {
-            //                    notifyIcon.ShowBalloonTip(30000);
-            //                    ListOfAlertMessagesSent.Add(message);
-            //                }
-
-            //            }
-            //            else
-            //            {
-            //                notifyIcon.ShowBalloonTip(30000);
-            //                ListOfAlertMessagesSent.Add(message);
-            //            }
-
-
-
-            //        }
-
-            //        notifyIcon.Dispose();
-            //    }
-            //}
-        }
-
-        private bool CheckIfMessageIsAlreadySent(string v)
-        {
-            bool result = false;
-            foreach (var message in ListOfAlertMessagesSent)
-            {
-                if (message == v)
-                {
-                    result = true;
-                }
-            }
-
-            return result;
+            ListOfPopupMessages.Add(message);
         }
         private void UpdateCellColors()
         {
@@ -371,8 +308,6 @@ namespace FIWebScraper_netcore3._0
                 ReportOnlyPurchases = true;
 
             }
-
-            PushNotice();
         }
 
         private void CheckBox4_CheckStateChanged(object sender, EventArgs e)
@@ -385,8 +320,6 @@ namespace FIWebScraper_netcore3._0
             {
                 SendPushNotice = true;
             }
-
-            PushNotice();
         }
 
         private void CheckBox5_CheckStateChanged_1(object sender, EventArgs e)
@@ -416,7 +349,6 @@ namespace FIWebScraper_netcore3._0
                 MaxValueBeforeAResponse = input;
                 MainWindow1.Title = "CoolFronWarning";
                 UpdateCellColors();
-                PushNotice();
 
             }
         }
