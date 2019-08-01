@@ -6,6 +6,7 @@ namespace FIWebScraper_netcore3._0
 {
     public class Sale
     {
+        public int saleNumber { get; set; }
         public DateTime Publiceringsdatum { get; set; }
         public string Tid { get; set; }
         public string Utgivare { get; set; }

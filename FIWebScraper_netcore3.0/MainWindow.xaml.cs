@@ -128,11 +128,11 @@ namespace FIWebScraper_netcore3._0
                 //Delay until next update
                 int.TryParse(SecondsDelay.ToString(), out int timeout);
                 await Task.Delay(timeout);
-                notificationManager.Show("Nytt köp av Viktor myehsekk", onClick: () => this.WindowState = WindowState.Maximized,
-               onClose: () => Console.WriteLine("Closed!"));
+               // notificationManager.Show("Nytt köp av Viktor myehsekk", onClick: () => this.WindowState = WindowState.Maximized,
+               //onClose: () => Console.WriteLine("Closed!"));
 
-                //Måste "flytta" ner alla poster....
-                scraper.AddedSales[0].Namn = "Martin";
+               // //Måste "flytta" ner alla poster....
+               // scraper.AddedSales[0].Namn = "Martin";
 
             }
         }

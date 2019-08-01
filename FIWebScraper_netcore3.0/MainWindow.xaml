@@ -10,6 +10,7 @@
         <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="SaleNumber" Binding="{Binding Path=saleNumber}"></DataGridTextColumn>
                 <DataGridTemplateColumn Header="Datum">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
