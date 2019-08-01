@@ -255,26 +255,7 @@ namespace FIWebScraper_netcore3._0
 
             //ControlAllCheckStates();
         }
-        private void WarningValueInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            int.TryParse(warningValue.Text, out int input);
-            if (input != 0)
-            {
-                MaxValueBeforeAResponse = input;
-                MainWindow1.Title = "CoolFronWarning";
 
-            }
-        }
-        private void SelcondsDelayInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            decimal.TryParse(selcondsDelayInput.Text, out decimal input);
-            if (input != 0)
-            {
-                SecondsDelay = 1000 * input;
-                MainWindow1.Title = "Cool";
-
-            }
-        }
         private void CombineMultipleSales_Checked(object sender, RoutedEventArgs e)
         {
             MainWindow1.Title = "Cool";
@@ -359,6 +340,26 @@ namespace FIWebScraper_netcore3._0
         private void WarningValue_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
+        }
+        private void WarningValueInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int.TryParse(warningValue.Text, out int input);
+            if (input != 0)
+            {
+                MaxValueBeforeAResponse = input;
+                MainWindow1.Title = "CoolFronWarning";
+
+            }
+        }
+        private void SelcondsDelayInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            decimal.TryParse(selcondsDelayInput.Text, out decimal input);
+            if (input != 0)
+            {
+                SecondsDelay = 1000 * input;
+                MainWindow1.Title = "Cool";
+
+            }
         }
     }
 }
