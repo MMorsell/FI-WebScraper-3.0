@@ -115,9 +115,6 @@ namespace FIWebScraper_netcore3._0
 ////////////////////////////////////////////////////End Primary loop////////////////////////////////////////////////////////////////////////////////////
 
         }
-
-
-
         private void ControlAllCheckStates()
         {
 
@@ -136,7 +133,6 @@ namespace FIWebScraper_netcore3._0
                 ReportOnlyPurchases = false;
             }
         }
-
         private void DisplayOnlySelectedData()
         {
             //source.SuspendBinding();
@@ -197,10 +193,6 @@ namespace FIWebScraper_netcore3._0
             //}
             //source.ResumeBinding();
         }
-
-
-    
-
         private void CheckBox1_CheckStateChanged(object sender, EventArgs e)
         {
             if (CheckBox1.IsChecked.GetValueOrDefault())
@@ -213,7 +205,6 @@ namespace FIWebScraper_netcore3._0
             }
             DisplayOnlySelectedData();
         }
-
         private void CheckBox2_CheckStateChanged(object sender, EventArgs e)
         {
             if (CheckBox2.IsChecked.GetValueOrDefault())
@@ -226,7 +217,6 @@ namespace FIWebScraper_netcore3._0
             }
             DisplayOnlySelectedData();
         }
-
         private void CheckBox3_CheckStateChanged(object sender, EventArgs e)
         {
             if (CheckBox3.IsChecked.GetValueOrDefault())
@@ -240,7 +230,6 @@ namespace FIWebScraper_netcore3._0
 
             }
         }
-
         private void CheckBox4_CheckStateChanged(object sender, EventArgs e)
         {
             if (CheckBox4.IsChecked.GetValueOrDefault())
@@ -252,7 +241,6 @@ namespace FIWebScraper_netcore3._0
                 SendPushNotice = true;
             }
         }
-
         private void CheckBox5_CheckStateChanged_1(object sender, EventArgs e)
         {
             //if (CheckBox5.IsChecked.GetValueOrDefault())
@@ -266,7 +254,6 @@ namespace FIWebScraper_netcore3._0
 
             //ControlAllCheckStates();
         }
-
         private void WarningValue_TextChanged(object sender, TextChangedEventArgs e)
         {
             int.TryParse(warningValue.Text, out int input);
@@ -277,7 +264,6 @@ namespace FIWebScraper_netcore3._0
 
             }
         }
-        
         private void SelcondsDelayInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             decimal.TryParse(selcondsDelayInput.Text, out decimal input);
@@ -288,7 +274,6 @@ namespace FIWebScraper_netcore3._0
 
             }
         }
-
         private void CombineMultipleSales_Checked(object sender, RoutedEventArgs e)
         {
             MainWindow1.Title = "Cool";
@@ -296,7 +281,6 @@ namespace FIWebScraper_netcore3._0
             dataGridView1.ItemsSource = null;
             dataGridView1.ItemsSource = scraper.AddedSales;
         }
-
         private void CombineMultipleSales_Unchecked(object sender, RoutedEventArgs e)
         {
             MainWindow1.Title = "Not Cool";
@@ -321,7 +305,6 @@ namespace FIWebScraper_netcore3._0
                 dataGridView1.ItemsSource = scraper.Sales;
             }
         }
-
         private void CheckTextData()
         {
             textData++;
