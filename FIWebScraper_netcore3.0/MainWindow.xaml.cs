@@ -135,9 +135,6 @@ namespace FIWebScraper_netcore3._0
             {
                 ReportOnlyPurchases = false;
             }
-
-
-            UpdateCellColors();
         }
 
         private void DisplayOnlySelectedData()
@@ -202,38 +199,7 @@ namespace FIWebScraper_netcore3._0
         }
 
 
-        private void UpdateCellColors()
-        {
-
-            //source.SuspendBinding();
-            //if (!DisableColor)
-            //{
-            //    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //    {
-            //        double.TryParse(dataGridView1.Rows[i].Cells[14].Value.ToString(), out double totalt);
-
-            //        if (totalt > MaxValueBeforeAResponse)
-            //        {
-            //            dataGridView1.row[i].DefaultCellStyle.BackColor = Color.Red;
-            //            dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.White;
-            //        }
-            //        else
-            //        {
-            //            dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
-            //            dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.Black;
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //    {
-            //        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
-            //        dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.Black;
-            //    }
-            //}
-            //source.ResumeBinding();
-        }
+    
 
         private void CheckBox1_CheckStateChanged(object sender, EventArgs e)
         {
@@ -308,7 +274,6 @@ namespace FIWebScraper_netcore3._0
             {
                 MaxValueBeforeAResponse = input;
                 MainWindow1.Title = "CoolFronWarning";
-                UpdateCellColors();
 
             }
         }
@@ -370,6 +335,38 @@ namespace FIWebScraper_netcore3._0
                 button1.Content = "Start";
                 MainWindow1.Title = "Insynshandelsavläsare";
             }
+        }
+        private void RedMarkNewRowsOverTheValue()
+        {
+
+            //source.SuspendBinding();
+            //if (!DisableColor)
+            //{
+            //    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //    {
+            //        double.TryParse(dataGridView1.Rows[i].Cells[14].Value.ToString(), out double totalt);
+
+            //        if (totalt > MaxValueBeforeAResponse)
+            //        {
+            //            dataGridView1.row[i].DefaultCellStyle.BackColor = Color.Red;
+            //            dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.White;
+            //        }
+            //        else
+            //        {
+            //            dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
+            //            dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.Black;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //    {
+            //        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
+            //        dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.Black;
+            //    }
+            //}
+            //source.ResumeBinding();
         }
     }
 }
