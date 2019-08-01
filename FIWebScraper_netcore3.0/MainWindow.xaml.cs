@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.Reflection;
 using Notifications.Wpf;
+using System.Text.RegularExpressions;
 
 namespace FIWebScraper_netcore3._0
 {
@@ -254,7 +255,7 @@ namespace FIWebScraper_netcore3._0
 
             //ControlAllCheckStates();
         }
-        private void WarningValue_TextChanged(object sender, TextChangedEventArgs e)
+        private void WarningValueInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             int.TryParse(warningValue.Text, out int input);
             if (input != 0)
@@ -350,6 +351,14 @@ namespace FIWebScraper_netcore3._0
             //    }
             //}
             //source.ResumeBinding();
+        }
+        private void PreviewTextInputSecondsDelay(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
+        }
+        private void WarningValue_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
         }
     }
 }

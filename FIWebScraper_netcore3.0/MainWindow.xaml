@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Cursor="Arrow">
     <Grid Cursor="Arrow">
-        
+
         <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" AlternationCount="2" AlternatingRowBackground="LightGray" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
@@ -94,22 +94,22 @@
 
 
         </DataGrid>
-        
-        
+
+
         <Button x:Name="button1" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Height="105" Width="191" AutomationProperties.Name="button1" Cursor="Arrow" Click="Button1_Click"/>
-        <CheckBox x:Name="CheckBox1" Content="CheckBox" HorizontalAlignment="Left" Margin="24,202,0,0" VerticalAlignment="Top" Cursor="None"/>
-        <CheckBox x:Name="CheckBox2" Content="CheckBox" HorizontalAlignment="Left" Margin="24,222,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="CheckBox1" Content="CheckBox" HorizontalAlignment="Left" Margin="100,262,0,0" VerticalAlignment="Top" Cursor="Arrow"/>
+        <CheckBox x:Name="CheckBox2" Content="CheckBox" HorizontalAlignment="Left" Margin="95,242,0,0" VerticalAlignment="Top" Cursor="Arrow"/>
         <CheckBox x:Name="CheckBox3" Content="CheckBox" HorizontalAlignment="Left" Margin="24,242,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="CheckBox4" Content="CheckBox" HorizontalAlignment="Left" Margin="24,262,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="combineMultipleSales" Content="Slå ihop affärer" Unchecked="CombineMultipleSales_Unchecked" Checked="CombineMultipleSales_Checked" HorizontalAlignment="Left" Margin="24,282,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="warningValue" HorizontalAlignment="Left" TextChanged="WarningValue_TextChanged" Margin="62,133,0,0" Text="300000" TextWrapping="Wrap" AutomationProperties.Name="warningValue" VerticalAlignment="Top" Width="57"/>
+        <TextBox x:Name="warningValue" HorizontalAlignment="Left" TextChanged="WarningValueInput_TextChanged" Margin="62,133,0,0" Text="300000" TextWrapping="Wrap" AutomationProperties.Name="warningValue" VerticalAlignment="Top" Width="57" Cursor="Arrow" PreviewTextInput="WarningValue_PreviewTextInput"/>
         <TextBox x:Name="textBox2" HorizontalAlignment="Left" Margin="36,153,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="textBox3" HorizontalAlignment="Left" Margin="24,312,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="112"/>
-        <TextBox x:Name="selcondsDelayInput" HorizontalAlignment="Left" TextChanged="SelcondsDelayInput_TextChanged" TextAlignment="Center" Margin="60,110,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="59"/>
+        <TextBox x:Name="selcondsDelayInput" HorizontalAlignment="Left" TextChanged="SelcondsDelayInput_TextChanged" TextAlignment="Center" Margin="60,110,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="59" Cursor="Arrow" PreviewTextInput="PreviewTextInputSecondsDelay"/>
         <TextBox x:Name="ValueBeforeAlertInput" HorizontalAlignment="Left" Margin="36,176,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
-        
-        
+
+
 
     </Grid>
 </Window>
