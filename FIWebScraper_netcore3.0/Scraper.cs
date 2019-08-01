@@ -130,7 +130,7 @@ namespace FIWebScraper_netcore3._0
 
 
 
-                        FIWebScraper_netcore3._0.MainWindow.PushNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris}");
+                        FIWebScraper_netcore3._0.MainWindow.AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris}");
 
                     }
                 }
@@ -258,7 +258,7 @@ namespace FIWebScraper_netcore3._0
                         AddedSales[0].Status = sale.Status;
                         AddedSales[0].Detaljer = sale.Detaljer;
 
-                        FIWebScraper_netcore3._0.MainWindow.PushNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris}");
+                        FIWebScraper_netcore3._0.MainWindow.AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris}");
 
 
                     }

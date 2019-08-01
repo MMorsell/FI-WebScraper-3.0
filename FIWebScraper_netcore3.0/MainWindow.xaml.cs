@@ -85,11 +85,6 @@ namespace FIWebScraper_netcore3._0
                 //}
 
 
-
-
-                //notificationManager.Show("mes", onClick: () => this.WindowState = WindowState.Maximized);
-
-
                 ControlAllCheckStates();
 
 
@@ -110,7 +105,6 @@ namespace FIWebScraper_netcore3._0
 
 
 
-                //Delay until next update
                 int.TryParse(SecondsDelay.ToString(), out int timeout);
                 await Task.Delay(timeout);
 
@@ -122,34 +116,7 @@ namespace FIWebScraper_netcore3._0
 
         }
 
-        private void UpdateDataGrid()
-        {
-            if (!CombineMultipleSales)
-            {
-                dataGridView1.ItemsSource = null;
-                dataGridView1.ItemsSource = scraper.AddedSales;
-            }
-            else
-            {
-                dataGridView1.ItemsSource = null;
-                dataGridView1.ItemsSource = scraper.Sales;
-            }
-        }
 
-        private void CheckTextData()
-        {
-            textData++;
-            if (textData % 2 != 0)
-            {
-                button1.Content = "Pause";
-                MainWindow1.Title = "Programmet Körs";
-            }
-            else
-            {
-                button1.Content = "Start";
-                MainWindow1.Title = "Insynshandelsavläsare";
-            }
-        }
 
         private void ControlAllCheckStates()
         {
@@ -234,12 +201,10 @@ namespace FIWebScraper_netcore3._0
             //source.ResumeBinding();
         }
 
-        public static void PushNotice(string message)
-        {
-            ListOfPopupMessages.Add(message);
-        }
+
         private void UpdateCellColors()
         {
+
             //source.SuspendBinding();
             //if (!DisableColor)
             //{
@@ -336,11 +301,6 @@ namespace FIWebScraper_netcore3._0
             //ControlAllCheckStates();
         }
 
-        private void DataGridView1_Click(object sender, EventArgs e)
-        {
-            ControlAllCheckStates();
-        }
-
         private void WarningValue_TextChanged(object sender, TextChangedEventArgs e)
         {
             int.TryParse(warningValue.Text, out int input);
@@ -378,6 +338,38 @@ namespace FIWebScraper_netcore3._0
             CombineMultipleSales = false;
             dataGridView1.ItemsSource = null;
             dataGridView1.ItemsSource = scraper.Sales;
+        }
+        public static void AddNotice(string message)
+        {
+            ListOfPopupMessages.Add(message);
+        }
+        private void UpdateDataGrid()
+        {
+            if (!CombineMultipleSales)
+            {
+                dataGridView1.ItemsSource = null;
+                dataGridView1.ItemsSource = scraper.AddedSales;
+            }
+            else
+            {
+                dataGridView1.ItemsSource = null;
+                dataGridView1.ItemsSource = scraper.Sales;
+            }
+        }
+
+        private void CheckTextData()
+        {
+            textData++;
+            if (textData % 2 != 0)
+            {
+                button1.Content = "Pause";
+                MainWindow1.Title = "Programmet Körs";
+            }
+            else
+            {
+                button1.Content = "Start";
+                MainWindow1.Title = "Insynshandelsavläsare";
+            }
         }
     }
 }
