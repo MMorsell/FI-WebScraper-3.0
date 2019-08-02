@@ -230,7 +230,7 @@ namespace FIWebScraper_netcore3._0
                 ApplicationCommands.Copy.Execute(null, dataGridView1);
                 String result = (string)Clipboard.GetData(DataFormats.Text);
                 dataGridView1.UnselectAllCells();
-                System.IO.StreamWriter file1 = new System.IO.StreamWriter(@$"{path}\HALLLLÅHÄRÄRJAG{DateTime.Now.ToShortDateString()}.xls");
+                System.IO.StreamWriter file1 = new System.IO.StreamWriter(@$"{path}\HALLLLÅHÄRÄRJAG{DateTime.Now.ToShortDateString()}.xlsx");
                 file1.WriteLine(result.Replace(',', ' '));
                 file1.Close();
             }
