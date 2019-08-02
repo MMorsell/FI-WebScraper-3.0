@@ -102,7 +102,7 @@
         <CheckBox x:Name="CheckBox3" Content="CheckBox" HorizontalAlignment="Left" Margin="24,242,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="CheckBox4" Content="CheckBox" HorizontalAlignment="Left" Margin="24,262,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="combineMultipleSales" Content="Slå ihop affärer" Unchecked="CombineMultipleSales_Unchecked" Checked="CombineMultipleSales_Checked" HorizontalAlignment="Left" Margin="24,282,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="warningValue" HorizontalAlignment="Left" TextChanged="WarningValueInput_TextChanged" Margin="62,133,0,0" Text="300000" TextWrapping="Wrap" AutomationProperties.Name="warningValue" VerticalAlignment="Top" Width="57" Cursor="Arrow" PreviewTextInput="WarningValue_PreviewTextInput"/>
+        <TextBox x:Name="warningValue" HorizontalAlignment="Left" TextChanged="WarningValueInput_TextChanged" Margin="62,133,0,0" Text="-1" TextWrapping="Wrap" AutomationProperties.Name="warningValue" VerticalAlignment="Top" Width="57" Cursor="Arrow" PreviewTextInput="WarningValue_PreviewTextInput"/>
         <TextBox x:Name="textBox2" HorizontalAlignment="Left" Margin="36,153,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="ErrorTextBox" HorizontalAlignment="Left" Cursor="Arrow" IsReadOnly="True" Margin="24,312,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  Height="112"/>
         <TextBox x:Name="selcondsDelayInput" HorizontalAlignment="Left" TextChanged="SelcondsDelayInput_TextChanged" TextAlignment="Center" Margin="60,110,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="59" Cursor="Arrow" PreviewTextInput="PreviewTextInputSecondsDelay"/>

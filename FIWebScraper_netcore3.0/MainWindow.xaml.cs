@@ -30,7 +30,7 @@ namespace FIWebScraper_netcore3._0
         Scraper scraper;
         static int textData = 0;
         public decimal SecondsDelay { get; set; } = 5000;
-        public int MaxValueBeforeAResponse { get; set; } = 300000;
+        public static int MaxValueBeforeAResponse { get; set; } = -1;
         static List<string> ListOfPopupMessages = new List<string>();
         public bool ReportOnlyPurchases { get; set; } = false;
         public bool SendPushNotice { get; set; } = true;
@@ -90,15 +90,15 @@ namespace FIWebScraper_netcore3._0
                 {
                     foreach (var message in ListOfPopupMessages)
                     {
+                            var notice = new NotificationContent();
+                            notice.Title = "Ny affär hittad!";
+                            notice.Message = message;
+                            notice.Type = NotificationType.Information;
 
-                    var notice = new NotificationContent();
-                    notice.Title = "Ny affär hittad!";
-                    notice.Message = message;
-                    notice.Type = NotificationType.Information;
-                  
-                    notificationManager.Show(notice, onClick: () => this.WindowState = WindowState.Maximized);
+                            notificationManager.Show(notice, onClick: () => this.WindowState = WindowState.Maximized); 
                     }
                     ListOfPopupMessages.Clear();
+                    WriteToExcel();
                 }
 
 
@@ -106,7 +106,7 @@ namespace FIWebScraper_netcore3._0
                 int.TryParse(SecondsDelay.ToString(), out int timeout);
                 await Task.Delay(timeout);
 
-                ExportToExcelAndCsv();
+
 
 
             }
@@ -198,7 +198,7 @@ namespace FIWebScraper_netcore3._0
         }
         private void WarningValue_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
+            e.Handled = new Regex(@"[^0-9\.\-\,]+").IsMatch(e.Text);
         }
         private void WarningValueInput_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -220,7 +220,7 @@ namespace FIWebScraper_netcore3._0
 
             }
         }
-        private void ExportToExcelAndCsv()
+        private void WriteToExcel()
         {
             try
             {
