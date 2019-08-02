@@ -69,7 +69,7 @@ namespace FIWebScraper_netcore3._0
                 }
                 catch
                 {
-                    if (reportErrorMessagesNumber != 5)
+                    if (reportErrorMessagesNumber > 5)
                     {
                         reportErrorMessages.AppendLine($"Misslyckad uppdatering {DateTime.Now.ToString("HH:mm:ss")}");
                         ErrorTextBox.Text = reportErrorMessages.ToString();
@@ -222,18 +222,24 @@ namespace FIWebScraper_netcore3._0
         }
         private void ExportToExcelAndCsv()
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            dataGridView1.SelectAllCells();
-            dataGridView1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-            ApplicationCommands.Copy.Execute(null, dataGridView1);
-            String resultat = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-            String result = (string)Clipboard.GetData(DataFormats.Text);
-            dataGridView1.UnselectAllCells();
-            System.IO.StreamWriter file1 = new System.IO.StreamWriter(path);
-            file1.WriteLine(result.Replace(',', ' '));
-            file1.Close();
+            try
+            {
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                dataGridView1.SelectAllCells();
+                dataGridView1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+                ApplicationCommands.Copy.Execute(null, dataGridView1);
+                String result = (string)Clipboard.GetData(DataFormats.Text);
+                dataGridView1.UnselectAllCells();
+                System.IO.StreamWriter file1 = new System.IO.StreamWriter(@$"{path}\HALLLLÅHÄRÄRJAG{DateTime.Now.ToShortDateString()}.xls");
+                file1.WriteLine(result.Replace(',', ' '));
+                file1.Close();
+            }
+            catch
+            {
+                reportErrorMessages.AppendLine($"Misslyckade att skriva til excel {DateTime.Now.ToString("HH:mm:ss")}");
+                ErrorTextBox.Text = reportErrorMessages.ToString();
+            }
 
-            MessageBox.Show(" Exporting DataGrid data to Excel file created.xls");
         }
     }
 }
