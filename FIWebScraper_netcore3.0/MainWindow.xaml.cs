@@ -57,36 +57,33 @@ namespace FIWebScraper_netcore3._0
             while (textData % 2 != 0)
             {
                 UpdateDataGrid();
-               
+
 
                 //tries to download the new version
-                //try
-                //{
+                try
+                {
 
-                //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
-                scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+                    //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                    scraper.ScrapeData(@"http://localhost/dashboard/");
 
-                //}
-                //catch
-                //{
-                //    if (reportErrorMessagesNumber != 5)
-                //    {
-                //        reportErrorMessages.AppendLine($"Misslyckad uppdatering {DateTime.Now.ToString("HH:mm:ss")}");
-                //        textBox3.Text = reportErrorMessages.ToString();
-                //        reportErrorMessagesNumber++;
+                }
+                catch
+                {
+                    if (reportErrorMessagesNumber != 5)
+                    {
+                        reportErrorMessages.AppendLine($"Misslyckad uppdatering {DateTime.Now.ToString("HH:mm:ss")}");
+                        ErrorTextBox.Text = reportErrorMessages.ToString();
+                        reportErrorMessagesNumber++;
 
-                //        int.TryParse(SecondsDelay.ToString(), out int timeout2);
-                //        await Task.Delay(timeout2);
-                //    }
-                //    else
-                //    {
-                //        reportErrorMessages.Clear();
-                //        reportErrorMessagesNumber = 0;
-                //    }
-                //}
-
-
-                ControlAllCheckStates();
+                        int.TryParse(SecondsDelay.ToString(), out int timeout2);
+                        await Task.Delay(timeout2);
+                    }
+                    else
+                    {
+                        reportErrorMessages.Clear();
+                        reportErrorMessagesNumber = 0;
+                    }
+                }
 
 
                 if (ListOfPopupMessages.Count != 0)
@@ -109,166 +106,28 @@ namespace FIWebScraper_netcore3._0
                 int.TryParse(SecondsDelay.ToString(), out int timeout);
                 await Task.Delay(timeout);
 
-
+                ExportToExcelAndCsv();
 
 
             }
 ////////////////////////////////////////////////////End Primary loop////////////////////////////////////////////////////////////////////////////////////
 
         }
-        private void ControlAllCheckStates()
-        {
-
-            //Display options
-            DisplayOnlySelectedData();
-
-
-            //Notification options below
-            //Warn only about purchases
-            if (CheckBox2.IsChecked.GetValueOrDefault())
-            {
-                ReportOnlyPurchases = true;
-            }
-            else
-            {
-                ReportOnlyPurchases = false;
-            }
-        }
-        private void DisplayOnlySelectedData()
-        {
-            //source.SuspendBinding();
-            //if (ShowOnlySalesRows)
-            //{
-            //    if (HideUHandelsplatsRows)
-            //    {
-            //        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //        {
-            //            if (dataGridView1.Rows[i].Cells[6].Value.ToString().Equals("Förvärv", StringComparison.CurrentCultureIgnoreCase) && !dataGridView1.Rows[i].Cells[16].Value.ToString().Equals("Utanför handelsplats", StringComparison.CurrentCultureIgnoreCase))
-            //            {
-            //                dataGridView1.Rows[i].Visible = true;
-            //            }
-            //            else
-            //            {
-            //                dataGridView1.Rows[i].Visible = false;
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //        {
-            //            if (dataGridView1.Rows[i].Cells[6].Value.ToString().Equals("Förvärv", StringComparison.CurrentCultureIgnoreCase))
-            //            {
-            //                dataGridView1.Rows[i].Visible = true;
-            //            }
-            //            else
-            //            {
-            //                dataGridView1.Rows[i].Visible = false;
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    if (HideUHandelsplatsRows)
-            //    {
-            //        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //        {
-            //            if (!dataGridView1.Rows[i].Cells[16].Value.ToString().Equals("Utanför handelsplats", StringComparison.CurrentCultureIgnoreCase))
-            //            {
-            //                dataGridView1.Rows[i].Visible = true;
-            //            }
-            //            else
-            //            {
-            //                dataGridView1.Rows[i].Visible = false;
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //        {
-            //            dataGridView1.Rows[i].Visible = true;
-            //        }
-            //    }
-            //}
-            //source.ResumeBinding();
-        }
-        private void CheckBox1_CheckStateChanged(object sender, EventArgs e)
-        {
-            if (CheckBox1.IsChecked.GetValueOrDefault())
-            {
-                ShowOnlySalesRows = true;
-            }
-            else
-            {
-                ShowOnlySalesRows = false;
-            }
-            DisplayOnlySelectedData();
-        }
-        private void CheckBox2_CheckStateChanged(object sender, EventArgs e)
-        {
-            if (CheckBox2.IsChecked.GetValueOrDefault())
-            {
-                HideUHandelsplatsRows = true;
-            }
-            else
-            {
-                HideUHandelsplatsRows = false;
-            }
-            DisplayOnlySelectedData();
-        }
-        private void CheckBox3_CheckStateChanged(object sender, EventArgs e)
-        {
-            if (CheckBox3.IsChecked.GetValueOrDefault())
-            {
-                ReportOnlyPurchases = true;
-
-            }
-            else
-            {
-                ReportOnlyPurchases = true;
-
-            }
-        }
-        private void CheckBox4_CheckStateChanged(object sender, EventArgs e)
-        {
-            if (CheckBox4.IsChecked.GetValueOrDefault())
-            {
-                SendPushNotice = false;
-            }
-            else
-            {
-                SendPushNotice = true;
-            }
-        }
-        private void CheckBox5_CheckStateChanged_1(object sender, EventArgs e)
-        {
-            //if (CheckBox5.IsChecked.GetValueOrDefault())
-            //{
-            //    DisableColor = true;
-            //}
-            //else
-            //{
-            //    DisableColor = false;
-            //}
-
-            //ControlAllCheckStates();
-        }
+      
 
         private void CombineMultipleSales_Checked(object sender, RoutedEventArgs e)
         {
             MainWindow1.Title = "Cool";
             CombineMultipleSales = true;
             dataGridView1.ItemsSource = null;
-            dataGridView1.ItemsSource = scraper.AddedSales;
+            dataGridView1.ItemsSource = scraper.AllEntries;
         }
         private void CombineMultipleSales_Unchecked(object sender, RoutedEventArgs e)
         {
             MainWindow1.Title = "Not Cool";
             CombineMultipleSales = false;
             dataGridView1.ItemsSource = null;
-            dataGridView1.ItemsSource = scraper.Sales;
+            dataGridView1.ItemsSource = scraper.CombinedSales;
         }
         public static void AddNotice(string message)
         {
@@ -279,12 +138,12 @@ namespace FIWebScraper_netcore3._0
             if (!CombineMultipleSales)
             {
                 dataGridView1.ItemsSource = null;
-                dataGridView1.ItemsSource = scraper.AddedSales;
+                dataGridView1.ItemsSource = scraper.AllEntries;
             }
             else
             {
                 dataGridView1.ItemsSource = null;
-                dataGridView1.ItemsSource = scraper.Sales;
+                dataGridView1.ItemsSource = scraper.CombinedSales;
             }
         }
         private void CheckTextData()
@@ -360,6 +219,21 @@ namespace FIWebScraper_netcore3._0
                 MainWindow1.Title = "Cool";
 
             }
+        }
+        private void ExportToExcelAndCsv()
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            dataGridView1.SelectAllCells();
+            dataGridView1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+            ApplicationCommands.Copy.Execute(null, dataGridView1);
+            String resultat = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+            String result = (string)Clipboard.GetData(DataFormats.Text);
+            dataGridView1.UnselectAllCells();
+            System.IO.StreamWriter file1 = new System.IO.StreamWriter(path);
+            file1.WriteLine(result.Replace(',', ' '));
+            file1.Close();
+
+            MessageBox.Show(" Exporting DataGrid data to Excel file created.xls");
         }
     }
 }

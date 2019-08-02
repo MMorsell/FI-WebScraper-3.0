@@ -5,9 +5,10 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>FIWebScraper_netcore3._0</RootNamespace>
     <UseWPF>true</UseWPF>
-    <!--<PublishSingleFile>true</PublishSingleFile>-->
+    <PublishSingleFile>true</PublishSingleFile>
     <!--<PublishTrimmed>true</PublishTrimmed>-->
-    <!--<RuntimeIdentifier>win-x64</RuntimeIdentifier>-->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <ApplicationManifest>app1.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
