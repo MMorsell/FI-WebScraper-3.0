@@ -11,7 +11,7 @@
         <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" AlternationCount="2" AlternatingRowBackground="LightGray" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False"
                   AutoGenerateColumns="False" Background="White">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="SaleNumber" Binding="{Binding Path=saleNumber}"></DataGridTextColumn>
+                <!--<DataGridTextColumn Header="SaleNumber" Binding="{Binding Path=saleNumber}"></DataGridTextColumn>-->
                 <DataGridTemplateColumn Header="Datum">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -41,7 +41,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Binding="{Binding Path=Volym}">
+                <DataGridTextColumn Binding="{Binding Path=Volym,StringFormat={}{0:# ### ### ### ###}}">
                     <DataGridTextColumn.Header>
                         <TextBlock>
                     Volym
@@ -70,7 +70,7 @@
                 </DataGridTextColumn>
 
 
-                <DataGridTextColumn Binding="{Binding Path=Totalt}">
+                <DataGridTextColumn Binding="{Binding Path=Totalt,StringFormat={}{0:# ### ### ### ###}}">
                     <DataGridTextColumn.Header>
                         <TextBlock>
                     Totalt
@@ -84,7 +84,7 @@
                 </DataGridTextColumn>
 
                 <DataGridTextColumn Header="Valuta" Binding="{Binding Path=Valuta}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Antal Affärer" Binding="{Binding Path=Antal_Affärer}"></DataGridTextColumn>
+                <!--<DataGridTextColumn Header="Antal Affärer" Binding="{Binding Path=Antal_Affärer}"></DataGridTextColumn>-->
                 <DataGridTextColumn Header="Handelsplats" Binding="{Binding Path=Handelsplats}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Detaljer" Binding="{Binding Path=Detaljer}"></DataGridTextColumn>
