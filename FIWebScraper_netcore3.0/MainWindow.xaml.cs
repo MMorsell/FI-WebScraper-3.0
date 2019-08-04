@@ -64,7 +64,7 @@ namespace FIWebScraper_netcore3._0
                 {
 
                     //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
-                    scraper.ScrapeData(@"http://localhost/dashboard/");
+                    scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
 
                 }
                 catch
