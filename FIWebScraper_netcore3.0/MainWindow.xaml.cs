@@ -1,22 +1,11 @@
 ﻿//using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections;
-using System.ComponentModel;
-using System.Drawing.Design;
-using System.Reflection;
 using Notifications.Wpf;
 using System.Text.RegularExpressions;
 
@@ -104,7 +93,7 @@ namespace FIWebScraper_netcore3._0
                         ////notificationManager.Show(notice, "IsThisThingOn", expirationTime, onClick: () => this.WindowState = WindowState.Maximized);
                     }
                     ListOfPopupMessages.Clear();
-                    WriteToExcel();
+                    scraper.WriteToExcel();
                 }
 
 
@@ -225,28 +214,6 @@ namespace FIWebScraper_netcore3._0
                 MainWindow1.Title = "Cool";
 
             }
-        }
-        private void WriteToExcel()
-        {
-            try
-            {
-                string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                System.IO.Directory.CreateDirectory(@$"{path}\InsynsAffärer\");
-                dataGridView1.SelectAllCells();
-                dataGridView1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-                ApplicationCommands.Copy.Execute(null, dataGridView1);
-                String result = (string)Clipboard.GetData(DataFormats.Text);
-                dataGridView1.UnselectAllCells();
-                System.IO.StreamWriter file1 = new System.IO.StreamWriter(@$"{path}\InsynsAffärer\{DateTime.Now.ToShortDateString()}.xls");
-                file1.WriteLine(result.Replace(',', ' '));
-                file1.Close();
-            }
-            catch
-            {
-                reportErrorMessages.AppendLine($"Misslyckade att skriva til excel {DateTime.Now.ToString("HH:mm:ss")}");
-                ErrorTextBox.Text = reportErrorMessages.ToString();
-            }
-
         }
     }
 }
