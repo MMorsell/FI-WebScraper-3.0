@@ -231,12 +231,13 @@ namespace FIWebScraper_netcore3._0
             try
             {
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                System.IO.Directory.CreateDirectory(@$"{path}\InsynsAffärer\");
                 dataGridView1.SelectAllCells();
                 dataGridView1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                 ApplicationCommands.Copy.Execute(null, dataGridView1);
                 String result = (string)Clipboard.GetData(DataFormats.Text);
                 dataGridView1.UnselectAllCells();
-                System.IO.StreamWriter file1 = new System.IO.StreamWriter(@$"{path}\HALLLLÅHÄRÄRJAG{DateTime.Now.ToShortDateString()}.xls");
+                System.IO.StreamWriter file1 = new System.IO.StreamWriter(@$"{path}\InsynsAffärer\{DateTime.Now.ToShortDateString()}.xls");
                 file1.WriteLine(result.Replace(',', ' '));
                 file1.Close();
             }
