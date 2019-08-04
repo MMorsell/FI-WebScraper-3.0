@@ -9,6 +9,7 @@
     <!--<PublishTrimmed>true</PublishTrimmed>-->
     <!--<RuntimeIdentifier>win-x64</RuntimeIdentifier>-->
     <ApplicationManifest>app1.manifest</ApplicationManifest>
+    <ApplicationIcon>unnamed_H4Z_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
