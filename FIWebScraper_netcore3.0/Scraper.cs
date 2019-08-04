@@ -78,7 +78,7 @@ namespace FIWebScraper_netcore3._0
                             if (sale.Totalt > MainWindow.MaxValueBeforeAResponse)
                             {
 
-                                FIWebScraper_netcore3._0.MainWindow.AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris}");
+                                FIWebScraper_netcore3._0.MainWindow.AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris} {sale.Valuta}");
 
                             }
                         }
@@ -93,7 +93,7 @@ namespace FIWebScraper_netcore3._0
                 }
                 catch
                 {
-                    FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.AppendLine($"Misslyckade att tyda data {DateTime.Now.ToString("HH:mm:ss")}");
+                    FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.Insert(0,$"Misslyckade att tyda data {DateTime.Now.ToString("HH:mm:ss")}\n");
                 }
             }
 
@@ -156,7 +156,7 @@ namespace FIWebScraper_netcore3._0
             }
             catch
             {
-                FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.AppendLine($"Misslyckade att ladda ner {DateTime.Now.ToString("HH:mm:ss")}");
+                FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.Insert(0,$"Misslyckade att ladda ner {DateTime.Now.ToString("HH:mm:ss")}\n");
                 return listOfText;
             }
             return listOfText;
@@ -186,7 +186,7 @@ namespace FIWebScraper_netcore3._0
 
                         if (firstDownload != 0 && sale.Totalt > MainWindow.MaxValueBeforeAResponse)
                         {
-                            FIWebScraper_netcore3._0.MainWindow.AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris}");
+                            FIWebScraper_netcore3._0.MainWindow.AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris} {sale.Valuta}");
                         }
 
 

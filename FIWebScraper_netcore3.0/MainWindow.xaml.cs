@@ -65,6 +65,7 @@ namespace FIWebScraper_netcore3._0
 
                     //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
                     scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+                    reportErrorMessages.Insert(0,$"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
 
                 }
                 catch
@@ -74,9 +75,6 @@ namespace FIWebScraper_netcore3._0
                         //reportErrorMessages.AppendLine($"Misslyckad uppdatering {DateTime.Now.ToString("HH:mm:ss")}");
                         ErrorTextBox.Text = reportErrorMessages.ToString();
                         reportErrorMessagesNumber++;
-
-                        int.TryParse(SecondsDelay.ToString(), out int timeout2);
-                        await Task.Delay(timeout2);
                     }
                     else
                     {
