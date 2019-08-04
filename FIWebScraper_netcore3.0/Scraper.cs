@@ -31,7 +31,8 @@ namespace FIWebScraper_netcore3._0
 
         public void ScrapeData(string page)
         {
-
+            var tempBuilder = new StringBuilder();
+            int tempBuilderCount = 0;
             List<string> listOfText = DownloadNewVersion(page);
 
             int nextPost = 0;
@@ -93,7 +94,9 @@ namespace FIWebScraper_netcore3._0
                 }
                 catch
                 {
-                    FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.Insert(0,$"Misslyckade att tyda data {DateTime.Now.ToString("HH:mm:ss")}\n");
+                    tempBuilder.Insert(0,$"FEL! ej tydbar data {DateTime.Now.ToString("HH:mm:ss")}\n");
+                    FIWebScraper_netcore3._0.MainWindow.newErrorMessage = true;
+                    tempBuilderCount++;
                 }
             }
 
@@ -101,6 +104,17 @@ namespace FIWebScraper_netcore3._0
             {
                 firstDownload++;
             }
+
+
+            if (tempBuilderCount == 10)
+            {
+                FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.Insert(0, $"FEL! ej tydbar data {DateTime.Now.ToString("HH:mm:ss")}\n");
+            }
+            else
+            {
+                FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.Insert(0, tempBuilder);
+            }
+
 
         }
         private List<string> DownloadNewVersion(string page)
@@ -156,7 +170,8 @@ namespace FIWebScraper_netcore3._0
             }
             catch
             {
-                FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.Insert(0,$"Misslyckade att ladda ner {DateTime.Now.ToString("HH:mm:ss")}\n");
+                FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.Insert(0,$"FEL! internet timeout {DateTime.Now.ToString("HH:mm:ss")}\n");
+                FIWebScraper_netcore3._0.MainWindow.newErrorMessage = true;
                 return listOfText;
             }
             return listOfText;

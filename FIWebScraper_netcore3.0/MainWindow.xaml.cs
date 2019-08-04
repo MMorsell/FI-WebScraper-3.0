@@ -38,6 +38,7 @@ namespace FIWebScraper_netcore3._0
         public bool HideUHandelsplatsRows { get; set; } = false;
         public bool DisableColor { get; set; } = false;
         public static StringBuilder reportErrorMessages = new StringBuilder();
+        public static bool newErrorMessage;
         public int reportErrorMessagesNumber { get; set; }
         public bool CombineMultipleSales { get; set; } = false;
         public MainWindow()
@@ -52,6 +53,7 @@ namespace FIWebScraper_netcore3._0
         {
             var notificationManager = new NotificationManager();
             CheckTextData();
+            newErrorMessage = false;
 
 ////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
             while (textData % 2 != 0)
@@ -59,28 +61,18 @@ namespace FIWebScraper_netcore3._0
                 UpdateDataGrid();
 
 
-                //tries to download the new version
-                try
-                {
-
                     //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
                     scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
-                    reportErrorMessages.Insert(0,$"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
 
-                }
-                catch
+
+
+                if (!newErrorMessage)
                 {
-                    if (reportErrorMessagesNumber < 5)
-                    {
-                        //reportErrorMessages.AppendLine($"Misslyckad uppdatering {DateTime.Now.ToString("HH:mm:ss")}");
-                        ErrorTextBox.Text = reportErrorMessages.ToString();
-                        reportErrorMessagesNumber++;
-                    }
-                    else
-                    {
-                        reportErrorMessages.Clear();
-                        reportErrorMessagesNumber = 0;
-                    }
+                    reportErrorMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
+                }
+                else
+                {
+                    newErrorMessage = false;
                 }
 
                 ErrorTextBox.Text = reportErrorMessages.ToString();
@@ -105,8 +97,11 @@ namespace FIWebScraper_netcore3._0
                             notice.Title = "Ny affär hittad!";
                             notice.Message = message;
                             notice.Type = NotificationType.Information;
+                            
 
-                            notificationManager.Show(notice, onClick: () => this.WindowState = WindowState.Maximized); 
+                        notificationManager.Show(notice, onClick: () => this.WindowState = WindowState.Maximized);
+                        //notificationManager.Show("hello", expirationTime);
+                        ////notificationManager.Show(notice, "IsThisThingOn", expirationTime, onClick: () => this.WindowState = WindowState.Maximized);
                     }
                     ListOfPopupMessages.Clear();
                     WriteToExcel();
