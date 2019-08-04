@@ -37,63 +37,64 @@ namespace FIWebScraper_netcore3._0
             int nextPost = 0;
             for (int i = 0; i < 10; i++)
             {
-                DateTime publishDateParsed = new DateTime();
                 //Creates a new sale
                 try
                 {
+                    DateTime.TryParse(listOfText[0 + nextPost], out DateTime publishDateParsed);
+                    var timeNow = DateTime.Now.ToString("HH:mm:ss");
+                    DateTime.TryParse(listOfText[8 + nextPost], out DateTime transactionDateParsed);
+                    double.TryParse(listOfText[9 + nextPost], out double volymParsed);
+                    double.TryParse(listOfText[11 + nextPost], out double prisParsed);
 
-                    DateTime.TryParse(listOfText[0 + nextPost], out publishDateParsed);
+                    var sale = new Sale { saleNumber = numberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed };
 
+                    //checks if record already exists with person and total cost
+                    bool recordExistInSaleList = EntryAlreadyExistsInCombinedSalesList(sale);
+
+                    //Checks if entry is already combined to one row
+                    bool entryAlreadyExistsInAddedList = EntryAlreadyExistsInAllEntriesList(sale);
+
+
+                    //checks if person has bought many and combines the ammount to one row. statusrow updates with number of sales, total volume and total cost is correct
+                    bool isSecondPurchaseOfSameStock = EntryHasBeenAddedToOneRow(sale, recordExistInSaleList, entryAlreadyExistsInAddedList);
+
+
+
+
+                    //if it doesnt exist, add it to the main interface
+                    if (!recordExistInSaleList && !isSecondPurchaseOfSameStock && !entryAlreadyExistsInAddedList && sale.Publiceringsdatum == DateTime.Today)
+                    {
+                        if (firstDownload == 0)
+                        {
+                            //Sales.Insert(Sales.Count,sale);
+                            AllEntries.Insert(AllEntries.Count, new Sale { saleNumber = numberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed });
+                            numberOfSales++;
+                        }
+                        else
+                        {
+                            //Sales.Insert(0,sale);
+                            AllEntries.Insert(0, new Sale { saleNumber = numberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed });
+                            numberOfSales++;
+                            if (sale.Totalt > MainWindow.MaxValueBeforeAResponse)
+                            {
+
+                                FIWebScraper_netcore3._0.MainWindow.AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris}");
+
+                            }
+                        }
+                    }
+
+
+
+
+
+
+                    nextPost = nextPost + 16;
                 }
                 catch
                 {
-                    Console.Read();
+                    FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.AppendLine($"Misslyckade att tyda data {DateTime.Now.ToString("HH:mm:ss")}");
                 }
-                var timeNow = DateTime.Now.ToString("HH:mm:ss");
-                DateTime.TryParse(listOfText[8 + nextPost], out DateTime transactionDateParsed);
-                double.TryParse(listOfText[9 + nextPost], out double volymParsed);
-                double.TryParse(listOfText[11 + nextPost], out double prisParsed);
-
-                var sale = new Sale { saleNumber=numberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed };
-
-
-                //checks if record already exists with person and total cost
-                bool recordExistInSaleList = EntryAlreadyExistsInCombinedSalesList(sale);
-
-                //Checks if entry is already combined to one row
-                bool entryAlreadyExistsInAddedList = EntryAlreadyExistsInAllEntriesList(sale);
-
-
-                //checks if person has bought many and combines the ammount to one row. statusrow updates with number of sales, total volume and total cost is correct
-                bool isSecondPurchaseOfSameStock = EntryHasBeenAddedToOneRow(sale, recordExistInSaleList, entryAlreadyExistsInAddedList);
-
-
-                //if it doesnt exist, add it to the main interface
-                //if (!recordExistInSaleList && sale.Publiceringsdatum == DateTime.Today)
-                if (!recordExistInSaleList && !isSecondPurchaseOfSameStock && !entryAlreadyExistsInAddedList && sale.Publiceringsdatum == DateTime.Today)
-                {
-                    if (firstDownload == 0)
-                    {
-                        //Sales.Insert(Sales.Count,sale);
-                        AllEntries.Insert(AllEntries.Count,new Sale { saleNumber = numberOfSales+1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed });
-                        numberOfSales++;
-                    }
-                    else
-                    {
-                        //Sales.Insert(0,sale);
-                        AllEntries.Insert(0,new Sale { saleNumber = numberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed });
-                        numberOfSales++;
-                        if (sale.Totalt > MainWindow.MaxValueBeforeAResponse)
-                        {
-
-                            FIWebScraper_netcore3._0.MainWindow.AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris}");
-
-                        }
-                    }
-                }
-
-
-                nextPost = nextPost + 16;
             }
 
             if (firstDownload == 0)
@@ -155,7 +156,8 @@ namespace FIWebScraper_netcore3._0
             }
             catch
             {
-
+                FIWebScraper_netcore3._0.MainWindow.reportErrorMessages.AppendLine($"Misslyckade att ladda ner {DateTime.Now.ToString("HH:mm:ss")}");
+                return listOfText;
             }
             return listOfText;
         }

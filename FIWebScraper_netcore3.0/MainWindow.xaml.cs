@@ -37,7 +37,7 @@ namespace FIWebScraper_netcore3._0
         public bool ShowOnlySalesRows { get; set; } = false;
         public bool HideUHandelsplatsRows { get; set; } = false;
         public bool DisableColor { get; set; } = false;
-        StringBuilder reportErrorMessages = new StringBuilder();
+        public static StringBuilder reportErrorMessages = new StringBuilder();
         public int reportErrorMessagesNumber { get; set; }
         public bool CombineMultipleSales { get; set; } = false;
         public MainWindow()
@@ -69,9 +69,9 @@ namespace FIWebScraper_netcore3._0
                 }
                 catch
                 {
-                    if (reportErrorMessagesNumber > 5)
+                    if (reportErrorMessagesNumber < 5)
                     {
-                        reportErrorMessages.AppendLine($"Misslyckad uppdatering {DateTime.Now.ToString("HH:mm:ss")}");
+                        //reportErrorMessages.AppendLine($"Misslyckad uppdatering {DateTime.Now.ToString("HH:mm:ss")}");
                         ErrorTextBox.Text = reportErrorMessages.ToString();
                         reportErrorMessagesNumber++;
 
@@ -84,6 +84,19 @@ namespace FIWebScraper_netcore3._0
                         reportErrorMessagesNumber = 0;
                     }
                 }
+
+                ErrorTextBox.Text = reportErrorMessages.ToString();
+
+                //int numberOfNewErrorMessages = reportErrorMessages.Length - reportErrorMessagesNumber;
+                //if (reportErrorMessages.Length + numberOfNewErrorMessages > reportErrorMessages.Length)
+                //{
+                //    //for (int i = reportErrorMessages.Length; i < reportErrorMessagesNumber; i++)
+                //    //{
+                //    //    ErrorTextBox.Text = reportErrorMessages[i].ToString();
+
+                //    //}
+                //}
+
 
 
                 if (ListOfPopupMessages.Count != 0)
