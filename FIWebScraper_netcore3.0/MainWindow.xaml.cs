@@ -50,7 +50,7 @@ namespace FIWebScraper_netcore3._0
 
 
                 //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
-                ListOfSales = scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+                ListOfSales = await Task.Run(() => scraper.ScrapeData(@"http://192.168.1.35/dashboard/"));
 
                 if (!NewErrorMessage)
                 {
