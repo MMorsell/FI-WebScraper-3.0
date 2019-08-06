@@ -47,7 +47,7 @@ namespace FIWebScraper_netcore3._0
             while (ProgramIsRunning)
             {
                 UpdateDataGrid();
-
+                
 
                 //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
                 //ListOfSales = await Task.Run(() => scraper.ScrapeData(@"http://192.168.1.35/dashboard/"));
