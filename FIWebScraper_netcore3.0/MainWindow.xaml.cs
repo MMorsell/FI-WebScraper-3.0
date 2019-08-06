@@ -18,7 +18,7 @@ namespace FIWebScraper_netcore3._0
     {
         Scraper scraper;
         PushNotice pushNotice;
-        static int textData = 0;
+        public bool ProgramIsRunning { get; set; } = false;
         public decimal SecondsDelay { get; set; } = 7000;
         public static int ValueToWarnOver { get; set; } = 0;
 
@@ -34,17 +34,16 @@ namespace FIWebScraper_netcore3._0
             pushNotice = new PushNotice();
             ListOfSales = new List<Sale>();
             MainWindow1.Title = "Insynshandelsavläsare";
-
+            NewErrorMessage = false;
         }
 
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
 
-            CheckTextData();
-            NewErrorMessage = false;
+            StartStopProgram();
 
 ////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
-            while (textData % 2 != 0)
+            while (ProgramIsRunning)
             {
                 UpdateDataGrid();
 
@@ -65,26 +64,12 @@ namespace FIWebScraper_netcore3._0
 
                 ErrorTextBox.Text = ReportErrorMessages.ToString();
 
-                //int numberOfNewErrorMessages = reportErrorMessages.Length - reportErrorMessagesNumber;
-                //if (reportErrorMessages.Length + numberOfNewErrorMessages > reportErrorMessages.Length)
-                //{
-                //    //for (int i = reportErrorMessages.Length; i < reportErrorMessagesNumber; i++)
-                //    //{
-                //    //    ErrorTextBox.Text = reportErrorMessages[i].ToString();
-
-                //    //}
-                //}
-
-
+                
                 pushNotice.CheckForNewMessages(ListOfSales);
 
 
                 int.TryParse(SecondsDelay.ToString(), out int timeout);
                 await Task.Delay(timeout);
-
-
-
-
             }
 ////////////////////////////////////////////////////End Primary loop////////////////////////////////////////////////////////////////////////////////////
 
@@ -116,10 +101,10 @@ namespace FIWebScraper_netcore3._0
                 dataGridView1.ItemsSource = scraper.CombinedSales;
             }
         }
-        private void CheckTextData()
+        private void StartStopProgram()
         {
-            textData++;
-            if (textData % 2 != 0)
+            ProgramIsRunning = !ProgramIsRunning;
+            if (ProgramIsRunning)
             {
                 button1.Content = "Pause";
                 MainWindow1.Title = "Programmet Körs";
