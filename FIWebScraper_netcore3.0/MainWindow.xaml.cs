@@ -17,32 +17,31 @@ namespace FIWebScraper_netcore3._0
     public partial class MainWindow : Window
     {
         Scraper scraper;
+        PushNotice pushNotice;
         static int textData = 0;
-        public decimal SecondsDelay { get; set; } = 5000;
-        public static int MaxValueBeforeAResponse { get; set; } = -1;
-        static List<string> ListOfPopupMessages = new List<string>();
-        public bool ReportOnlyPurchases { get; set; } = false;
-        public bool SendPushNotice { get; set; } = true;
-        public bool ShowOnlySalesRows { get; set; } = false;
-        public bool HideUHandelsplatsRows { get; set; } = false;
-        public bool DisableColor { get; set; } = false;
-        public static StringBuilder reportErrorMessages = new StringBuilder();
-        public static bool newErrorMessage;
-        public int reportErrorMessagesNumber { get; set; }
+        public decimal SecondsDelay { get; set; } = 7000;
+        public static int ValueToWarnOver { get; set; } = 0;
+
+        public static StringBuilder ReportErrorMessages = new StringBuilder();
+
+        public static bool NewErrorMessage;
         public bool CombineMultipleSales { get; set; } = false;
+        public List<Sale> ListOfSales { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             scraper = new Scraper();
+            pushNotice = new PushNotice();
+            ListOfSales = new List<Sale>();
             MainWindow1.Title = "Insynshandelsavläsare";
-            ListOfPopupMessages = new List<string>();
+
         }
 
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
-            var notificationManager = new NotificationManager();
+
             CheckTextData();
-            newErrorMessage = false;
+            NewErrorMessage = false;
 
 ////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
             while (textData % 2 != 0)
@@ -51,20 +50,20 @@ namespace FIWebScraper_netcore3._0
 
 
                     //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
-                    scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+                    ListOfSales = scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
 
 
 
-                if (!newErrorMessage)
+                if (!NewErrorMessage)
                 {
-                    reportErrorMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
+                    ReportErrorMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
                 }
                 else
                 {
-                    newErrorMessage = false;
+                    NewErrorMessage = false;
                 }
 
-                ErrorTextBox.Text = reportErrorMessages.ToString();
+                ErrorTextBox.Text = ReportErrorMessages.ToString();
 
                 //int numberOfNewErrorMessages = reportErrorMessages.Length - reportErrorMessagesNumber;
                 //if (reportErrorMessages.Length + numberOfNewErrorMessages > reportErrorMessages.Length)
@@ -77,25 +76,7 @@ namespace FIWebScraper_netcore3._0
                 //}
 
 
-
-                if (ListOfPopupMessages.Count != 0)
-                {
-                    foreach (var message in ListOfPopupMessages)
-                    {
-                            var notice = new NotificationContent();
-                            notice.Title = "Ny affär hittad!";
-                            notice.Message = message;
-                            notice.Type = NotificationType.Information;
-                            
-
-                        notificationManager.Show(notice, onClick: () => this.WindowState = WindowState.Maximized);
-                        //notificationManager.Show("hello", expirationTime);
-                        ////notificationManager.Show(notice, "IsThisThingOn", expirationTime, onClick: () => this.WindowState = WindowState.Maximized);
-                    }
-                    ListOfPopupMessages.Clear();
-                    scraper.WriteToExcel();
-                }
-
+                pushNotice.CheckForNewMessages(ListOfSales);
 
 
                 int.TryParse(SecondsDelay.ToString(), out int timeout);
@@ -112,21 +93,15 @@ namespace FIWebScraper_netcore3._0
 
         private void CombineMultipleSales_Checked(object sender, RoutedEventArgs e)
         {
-            MainWindow1.Title = "Cool";
             CombineMultipleSales = true;
             dataGridView1.ItemsSource = null;
             dataGridView1.ItemsSource = scraper.AllEntries;
         }
         private void CombineMultipleSales_Unchecked(object sender, RoutedEventArgs e)
         {
-            MainWindow1.Title = "Not Cool";
             CombineMultipleSales = false;
             dataGridView1.ItemsSource = null;
             dataGridView1.ItemsSource = scraper.CombinedSales;
-        }
-        public static void AddNotice(string message)
-        {
-            ListOfPopupMessages.Add(message);
         }
         private void UpdateDataGrid()
         {
@@ -155,38 +130,6 @@ namespace FIWebScraper_netcore3._0
                 MainWindow1.Title = "Insynshandelsavläsare";
             }
         }
-        private void RedMarkNewRowsOverTheValue()
-        {
-
-            //source.SuspendBinding();
-            //if (!DisableColor)
-            //{
-            //    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //    {
-            //        double.TryParse(dataGridView1.Rows[i].Cells[14].Value.ToString(), out double totalt);
-
-            //        if (totalt > MaxValueBeforeAResponse)
-            //        {
-            //            dataGridView1.row[i].DefaultCellStyle.BackColor = Color.Red;
-            //            dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.White;
-            //        }
-            //        else
-            //        {
-            //            dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
-            //            dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.Black;
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //    {
-            //        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
-            //        dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.Black;
-            //    }
-            //}
-            //source.ResumeBinding();
-        }
         private void PreviewTextInputSecondsDelay(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
@@ -200,8 +143,7 @@ namespace FIWebScraper_netcore3._0
             int.TryParse(warningValue.Text, out int input);
             if (input != 0)
             {
-                MaxValueBeforeAResponse = input;
-                MainWindow1.Title = "CoolFronWarning";
+                ValueToWarnOver = input;
 
             }
         }
@@ -211,7 +153,6 @@ namespace FIWebScraper_netcore3._0
             if (input != 0)
             {
                 SecondsDelay = 1000 * input;
-                MainWindow1.Title = "Cool";
 
             }
         }
