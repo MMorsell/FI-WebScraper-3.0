@@ -22,7 +22,8 @@ namespace FIWebScraper_netcore3._0
         public decimal SecondsDelay { get; set; } = 7000;
         public static int ValueToWarnOver { get; set; } = 0;
 
-        public static StringBuilder ReportErrorMessages = new StringBuilder();
+        public static StringBuilder ErrorMessages = new StringBuilder();
+        public static StringBuilder RegularMessages = new StringBuilder();
 
         public static bool NewErrorMessage;
         public bool CombineMultipleSales { get; set; } = false;
@@ -53,20 +54,21 @@ namespace FIWebScraper_netcore3._0
 
                 if (!NewErrorMessage)
                 {
-                    ReportErrorMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
+                    RegularMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
+                    Log.Text = RegularMessages.ToString();
                 }
                 else
                 {
                     NewErrorMessage = false;
+                    ErrorTextBox.Text = ErrorMessages.ToString();
                 }
 
-                ErrorTextBox.Text = ReportErrorMessages.ToString();
 
-
-                if (ReportErrorMessages.Length > 10000)
+                if (ErrorMessages.Length > 10000)
                 {
-                    ReportErrorMessages.Clear();
+                    ErrorMessages.Clear();
                 }
+
 
 
                 pushNotice.CheckForNewMessages(ListOfSales);

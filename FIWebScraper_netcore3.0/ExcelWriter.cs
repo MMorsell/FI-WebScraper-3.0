@@ -82,7 +82,7 @@ namespace FIWebScraper_netcore3._0
             }
             catch
             {
-                FIWebScraper_netcore3._0.MainWindow.ReportErrorMessages.Insert(0, $"Misslyckade att skriva til excel {DateTime.Now.ToString("HH:mm:ss")}\n");
+                FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0, $"Misslyckade att skriva til excel {DateTime.Now.ToString("HH:mm:ss")}\n");
                 FIWebScraper_netcore3._0.MainWindow.NewErrorMessage = true;
             }
 

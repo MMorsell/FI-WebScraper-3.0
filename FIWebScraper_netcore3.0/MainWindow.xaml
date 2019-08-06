@@ -97,13 +97,17 @@
 
 
         <Button x:Name="button1" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Height="105" Width="191" AutomationProperties.Name="button1" Cursor="Arrow" Click="Button1_Click" FontSize="36" FontWeight="Bold"/>
-        <TextBox x:Name="ErrorTextBox" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Cursor="Arrow" IsReadOnly="True" Margin="0,235,0,61" TextWrapping="Wrap" Width="191" BorderBrush="White" FlowDirection="LeftToRight"/>
-        <TextBlock HorizontalAlignment="Left" Text="   Logg" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Height="32" FontSize="18" Cursor="Arrow" Background="#FFEEEEEE" Margin="0,201,0,0"/>
+        <TextBox x:Name="ErrorTextBox" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Cursor="Arrow" IsReadOnly="True" Margin="0,441,0,0" TextWrapping="Wrap" Width="191" BorderBrush="White" FlowDirection="LeftToRight"/>
+        <TextBlock HorizontalAlignment="Left" Text="   ErrorLog
+                   " TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Height="32" FontSize="18" Cursor="Arrow" Background="#FFEEEEEE" Margin="0,408,0,0"/>
         <TextBlock Visibility="Hidden" HorizontalAlignment="Left" Margin="10,125,0,0" Text="Uppdat.frekvens" TextWrapping="Wrap" VerticalAlignment="Top" Cursor="Arrow"/>
         <TextBlock Visibility="Hidden" HorizontalAlignment="Left" Margin="10,162,0,0" Text="Notis över värde" TextWrapping="Wrap" VerticalAlignment="Top" Cursor="Arrow"/>
         <TextBox Visibility="Hidden" x:Name="selcondsDelayInput" HorizontalAlignment="Left" TextChanged="SelcondsDelayInput_TextChanged" TextAlignment="Center" Margin="105,124,0,0" Text="7" TextWrapping="Wrap" VerticalAlignment="Top" Width="59" Cursor="Arrow" PreviewTextInput="PreviewTextInputSecondsDelay"/>
         <TextBox Visibility="Hidden" x:Name="warningValue" TextAlignment="Center" HorizontalAlignment="Left" TextChanged="WarningValueInput_TextChanged" Margin="105,161,0,0" Text="0" TextWrapping="Wrap" AutomationProperties.Name="warningValue" VerticalAlignment="Top" Width="59" Cursor="Arrow" PreviewTextInput="WarningValue_PreviewTextInput"/>
         <CheckBox Visibility="Hidden" x:Name="combineMultipleSales" Content="Slå ihop affärer" Unchecked="CombineMultipleSales_Unchecked" Checked="CombineMultipleSales_Checked" HorizontalAlignment="Left" Margin="10,254,0,0" VerticalAlignment="Top" Cursor="Arrow"/>
+        <!--<TextBox x:Name="Log" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Cursor="Arrow" IsReadOnly="True" Margin="1,240,0,143" TextWrapping="Wrap" Width="191" Height="142"  BorderBrush="White" FlowDirection="LeftToRight"/>-->
+        <TextBlock HorizontalAlignment="Left" Text="   Log                    " TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Height="32" FontSize="18" Cursor="Arrow" Background="#FFEEEEEE" Margin="0,207,0,0"/>
+        <TextBox x:Name="Log" HorizontalAlignment="Left" Margin="0,240,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="192" Height="150" Cursor="Arrow" />
 
 
 

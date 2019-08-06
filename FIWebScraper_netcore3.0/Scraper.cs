@@ -12,8 +12,8 @@ namespace FIWebScraper_netcore3._0
 {
     public class Scraper
     {
-        public int numberOfSales { get; set; }
-        int firstDownload = 0;
+        public int NumberOfSales { get; set; }
+        public bool FirstDownload { get; set; } = true;
 
         private ObservableCollection<Sale> _combinedSales = new ObservableCollection<Sale>();
 
@@ -37,6 +37,10 @@ namespace FIWebScraper_netcore3._0
             var tempBuilder = new StringBuilder();
             int tempBuilderCount = 0;
             List<string> listOfText = DownloadNewVersion(page);
+            if (listOfText == null)
+            {
+                return AllEntries.ToList();
+            }
 
             int nextPost = 0;
             for (int i = 0; i < 10; i++)
@@ -50,7 +54,7 @@ namespace FIWebScraper_netcore3._0
                     double.TryParse(listOfText[9 + nextPost], out double volymParsed);
                     double.TryParse(listOfText[11 + nextPost], out double prisParsed);
 
-                    var sale = new Sale { saleNumber = numberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed };
+                    var sale = new Sale { saleNumber = NumberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed };
 
                     //checks if record already exists with person and total cost
                     bool recordExistInSaleList = EntryAlreadyExistsInCombinedSalesList(sale);
@@ -68,17 +72,17 @@ namespace FIWebScraper_netcore3._0
                     //if it doesnt exist, add it to the main interface
                     if (!recordExistInSaleList && !isSecondPurchaseOfSameStock && !entryAlreadyExistsInAddedList && sale.Publiceringsdatum == DateTime.Today)
                     {
-                        if (firstDownload == 0)
+                        if (FirstDownload)
                         {
                             //Sales.Insert(Sales.Count,sale);
-                            AllEntries.Insert(AllEntries.Count, new Sale { saleNumber = numberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed });
-                            numberOfSales++;
+                            AllEntries.Insert(AllEntries.Count, new Sale { saleNumber = NumberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed });
+                            NumberOfSales++;
                         }
                         else
                         {
                             //Sales.Insert(0,sale);
-                            AllEntries.Insert(0, new Sale { saleNumber = numberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed });
-                            numberOfSales++;
+                            AllEntries.Insert(0, new Sale { saleNumber = NumberOfSales + 1, Publiceringsdatum = publishDateParsed, Tid = timeNow, Utgivare = listOfText[1 + nextPost], Namn = listOfText[2 + nextPost], Befattning = listOfText[3 + nextPost], Närstående = listOfText[4 + nextPost], Karaktär = listOfText[5 + nextPost], Instrumentnamn = listOfText[6 + nextPost], ISIN = listOfText[7 + nextPost], Transaktionsdatum = transactionDateParsed, Volym = volymParsed, Volymsenhet = listOfText[10 + nextPost], Pris = prisParsed, Valuta = listOfText[12 + nextPost], Handelsplats = listOfText[13 + nextPost], Status = listOfText[14 + nextPost], Detaljer = listOfText[15 + nextPost], Totalt = volymParsed * prisParsed });
+                            NumberOfSales++;
                             if (sale.Totalt >= MainWindow.ValueToWarnOver)
                             {
                                 AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris} {sale.Valuta}");
@@ -101,19 +105,19 @@ namespace FIWebScraper_netcore3._0
                 }
             }
 
-            if (firstDownload == 0)
+            if (FirstDownload)
             {
-                firstDownload++;
+                FirstDownload = false;
             }
 
 
             if (tempBuilderCount == 10)
             {
-                FIWebScraper_netcore3._0.MainWindow.ReportErrorMessages.Insert(0, $"FEL! ej tydbar data {DateTime.Now.ToString("HH:mm:ss")}\n");
+                FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0, $"FEL! ej tydbar data {DateTime.Now.ToString("HH:mm:ss")}\n");
             }
             else
             {
-                FIWebScraper_netcore3._0.MainWindow.ReportErrorMessages.Insert(0, tempBuilder);
+                FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0, tempBuilder);
             }
 
             return AllEntries.ToList();
@@ -122,11 +126,21 @@ namespace FIWebScraper_netcore3._0
         {
             var webInterface = new HtmlWeb();
             List<string> listOfText = new List<string>();
-            try
-            {
-                var htmlDocument = webInterface.Load(page);
+            //try
+            //{
+            HtmlDocument htmlDocument = new HtmlDocument();
+                try
+                {
+                    htmlDocument = webInterface.Load(page);
+                }
+                catch (System.Net.WebException)
+                {
+                    FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0, $"FEL! internet timeout {DateTime.Now.ToString("HH:mm:ss")}\n");
+                    FIWebScraper_netcore3._0.MainWindow.NewErrorMessage = true;
+                    return null;
+                }
 
-
+                Console.Read();
 
 
                 var outerDiv = htmlDocument.DocumentNode.SelectSingleNode("//*[@class = 'table table-bordered table-hover table-striped zero-margin-top']");
@@ -168,13 +182,13 @@ namespace FIWebScraper_netcore3._0
                     listOfText[i] = System.Net.WebUtility.HtmlDecode(listOfText[i]);
                 }
 
-            }
-            catch
-            {
-                FIWebScraper_netcore3._0.MainWindow.ReportErrorMessages.Insert(0,$"FEL! internet timeout {DateTime.Now.ToString("HH:mm:ss")}\n");
-                FIWebScraper_netcore3._0.MainWindow.NewErrorMessage = true;
-                return listOfText;
-            }
+            //}
+            //catch
+            //{
+            //    FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0,$"FEL! internet timeout {DateTime.Now.ToString("HH:mm:ss")}\n");
+            //    FIWebScraper_netcore3._0.MainWindow.NewErrorMessage = true;
+            //    return listOfText;
+            //}
             return listOfText;
         }
 
@@ -198,9 +212,9 @@ namespace FIWebScraper_netcore3._0
                         //AddedSales.Add(sale);
                         //AddedSales.Insert(0, sale);
                         AllEntries.Insert(0, sale);
-                        numberOfSales++;
+                        NumberOfSales++;
 
-                        if (firstDownload != 0 && sale.Totalt >= MainWindow.ValueToWarnOver)
+                        if (!FirstDownload && sale.Totalt >= MainWindow.ValueToWarnOver)
                         {
                             AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris} {sale.Valuta}");
                         }
