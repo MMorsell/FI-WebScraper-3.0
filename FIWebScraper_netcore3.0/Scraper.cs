@@ -126,21 +126,11 @@ namespace FIWebScraper_netcore3._0
         {
             var webInterface = new HtmlWeb();
             List<string> listOfText = new List<string>();
-            //try
-            //{
-            HtmlDocument htmlDocument = new HtmlDocument();
-                try
-                {
-                    htmlDocument = webInterface.Load(page);
-                }
-                catch (System.Net.WebException)
-                {
-                    FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0, $"FEL! internet timeout {DateTime.Now.ToString("HH:mm:ss")}\n");
-                    FIWebScraper_netcore3._0.MainWindow.NewErrorMessage = true;
-                    return null;
-                }
+            try
+            {
+                var htmlDocument = webInterface.Load(page);
 
-                Console.Read();
+               
 
 
                 var outerDiv = htmlDocument.DocumentNode.SelectSingleNode("//*[@class = 'table table-bordered table-hover table-striped zero-margin-top']");
@@ -182,13 +172,13 @@ namespace FIWebScraper_netcore3._0
                     listOfText[i] = System.Net.WebUtility.HtmlDecode(listOfText[i]);
                 }
 
-            //}
-            //catch
-            //{
-            //    FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0,$"FEL! internet timeout {DateTime.Now.ToString("HH:mm:ss")}\n");
-            //    FIWebScraper_netcore3._0.MainWindow.NewErrorMessage = true;
-            //    return listOfText;
-            //}
+            }
+            catch
+            {
+                FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0, $"FEL! internet timeout {DateTime.Now.ToString("HH:mm:ss")}\n");
+                FIWebScraper_netcore3._0.MainWindow.NewErrorMessage = true;
+                return null;
+            }
             return listOfText;
         }
 
