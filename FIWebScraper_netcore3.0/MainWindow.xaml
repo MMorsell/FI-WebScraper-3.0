@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FIWebScraper_netcore3._0"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Cursor="Arrow">
+        Title="MainWindow" Height="546" Width="800" Cursor="Arrow">
     <Grid Cursor="Arrow" Background="#FFDDDDDD">
 
         <DataGrid x:Name="dataGridView1" Margin="191,0,0,0" AlternationCount="2" AlternatingRowBackground="LightGray" Cursor="Arrow" FontFamily="Bookman Old Style" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False"
@@ -97,8 +97,8 @@
 
 
         <Button x:Name="button1" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Height="105" Width="191" AutomationProperties.Name="button1" Cursor="Arrow" Click="Button1_Click" FontSize="36" FontWeight="Bold"/>
-        <TextBox x:Name="ErrorTextBox" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Cursor="Arrow" IsReadOnly="True" Margin="0,312,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="191" BorderBrush="White" FlowDirection="LeftToRight"/>
-        <TextBlock HorizontalAlignment="Left" Margin="0,280,0,0" Text="   Logg" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Height="32" FontSize="18" Cursor="Arrow" Background="#FFEEEEEE"/>
+        <TextBox x:Name="ErrorTextBox" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Cursor="Arrow" IsReadOnly="True" Margin="0,235,0,61" TextWrapping="Wrap" Width="191" BorderBrush="White" FlowDirection="LeftToRight"/>
+        <TextBlock HorizontalAlignment="Left" Text="   Logg" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Height="32" FontSize="18" Cursor="Arrow" Background="#FFEEEEEE" Margin="0,201,0,0"/>
         <TextBlock Visibility="Hidden" HorizontalAlignment="Left" Margin="10,125,0,0" Text="Uppdat.frekvens" TextWrapping="Wrap" VerticalAlignment="Top" Cursor="Arrow"/>
         <TextBlock Visibility="Hidden" HorizontalAlignment="Left" Margin="10,162,0,0" Text="Notis över värde" TextWrapping="Wrap" VerticalAlignment="Top" Cursor="Arrow"/>
         <TextBox Visibility="Hidden" x:Name="selcondsDelayInput" HorizontalAlignment="Left" TextChanged="SelcondsDelayInput_TextChanged" TextAlignment="Center" Margin="105,124,0,0" Text="7" TextWrapping="Wrap" VerticalAlignment="Top" Width="59" Cursor="Arrow" PreviewTextInput="PreviewTextInputSecondsDelay"/>

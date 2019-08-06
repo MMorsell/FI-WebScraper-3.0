@@ -48,10 +48,8 @@ namespace FIWebScraper_netcore3._0
                 UpdateDataGrid();
 
 
-                    //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
-                    ListOfSales = scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
-
-
+                //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                ListOfSales = scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
 
                 if (!NewErrorMessage)
                 {
@@ -64,7 +62,13 @@ namespace FIWebScraper_netcore3._0
 
                 ErrorTextBox.Text = ReportErrorMessages.ToString();
 
-                
+
+                if (ReportErrorMessages.Length > 10000)
+                {
+                    ReportErrorMessages.Clear();
+                }
+
+
                 pushNotice.CheckForNewMessages(ListOfSales);
 
 
