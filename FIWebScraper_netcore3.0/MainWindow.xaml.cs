@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Notifications.Wpf;
 using System.Text.RegularExpressions;
+using System.Windows.Documents;
+using System.Diagnostics;
 
 namespace FIWebScraper_netcore3._0
 {
@@ -41,6 +43,9 @@ namespace FIWebScraper_netcore3._0
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
 
+            //System.Diagnostics.Process.Start("http://www.webpage.com");
+
+
             StartStopProgram();
 
 ////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
@@ -49,9 +54,9 @@ namespace FIWebScraper_netcore3._0
                 UpdateDataGrid();
                 
 
-                //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                //ListOfSales = scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
                 //ListOfSales = await Task.Run(() => scraper.ScrapeData(@"http://192.168.1.35/dashboard/"));
-                ListOfSales = scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+                ListOfSales = scraper.ScrapeData(@"http://localhost/dashboard/");
 
                 if (!NewErrorMessage)
                 {
@@ -81,7 +86,6 @@ namespace FIWebScraper_netcore3._0
 ////////////////////////////////////////////////////End Primary loop////////////////////////////////////////////////////////////////////////////////////
 
         }
-      
 
         private void CombineMultipleSales_Checked(object sender, RoutedEventArgs e)
         {
@@ -148,5 +152,12 @@ namespace FIWebScraper_netcore3._0
 
             }
         }
+        void OpenLink(object sender, RoutedEventArgs e)
+        {
+            var destination = ((Hyperlink)e.OriginalSource).NavigateUri;
+            Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", destination.ToString());
+            Console.Read();
+        }
     }
 }
+

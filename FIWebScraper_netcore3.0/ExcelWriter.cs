@@ -37,8 +37,11 @@ namespace FIWebScraper_netcore3._0
                     workSheet.Cells[1, 12].Value = "Volymsenhet";
                     workSheet.Cells[1, 13].Value = "Pris";
                     workSheet.Cells[1, 14].Value = "Totalt";
-                    workSheet.Cells[1, 15].Value = "Valuta";
-                    workSheet.Cells[1, 16].Value = "Handelsplats";
+                    workSheet.Cells[1, 15].Value = "Antal aktier";
+                    workSheet.Cells[1, 16].Value = "Procent";
+                    workSheet.Cells[1, 17].Value = "Valuta";
+                    workSheet.Cells[1, 18].Value = "Handelsplats";
+                    workSheet.Cells[1, 19].Value = "Avanza";
 
 
 
@@ -59,9 +62,12 @@ namespace FIWebScraper_netcore3._0
                         workSheet.Cells[rowIndex, 11].Value = entry.Volym;
                         workSheet.Cells[rowIndex, 12].Value = entry.Volymsenhet;
                         workSheet.Cells[rowIndex, 13].Value = entry.Pris;
-                        workSheet.Cells[rowIndex, 14].Value = entry.Totalt;
-                        workSheet.Cells[rowIndex, 15].Value = entry.Valuta;
-                        workSheet.Cells[rowIndex, 16].Value = entry.Handelsplats;
+                        workSheet.Cells[rowIndex, 14].Value = entry.Antal_Aktier_Varde;
+                        workSheet.Cells[rowIndex, 15].Value = entry.Antal_Aktier_Compared_To_Sale;
+                        workSheet.Cells[rowIndex, 16].Value = entry.Totalt;
+                        workSheet.Cells[rowIndex, 17].Value = entry.Valuta;
+                        workSheet.Cells[rowIndex, 18].Value = entry.Handelsplats;
+                        workSheet.Cells[rowIndex, 19].Value = entry.LinkToAvanza;
                         rowIndex++;
                     }
 

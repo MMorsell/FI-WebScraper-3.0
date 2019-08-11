@@ -83,12 +83,21 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
+                <DataGridTextColumn Header="Antal aktier" Binding="{Binding Path=Antal_Aktier_Varde}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Procent" Binding="{Binding Path=Antal_Aktier_Compared_To_Sale,StringFormat={}{0:P2}}"></DataGridTextColumn>
+
                 <DataGridTextColumn Header="Valuta" Binding="{Binding Path=Valuta}"></DataGridTextColumn>
                 <!--<DataGridTextColumn Header="Antal Affärer" Binding="{Binding Path=Antal_Affärer}"></DataGridTextColumn>-->
                 <DataGridTextColumn Header="Handelsplats" Binding="{Binding Path=Handelsplats}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Detaljer" Binding="{Binding Path=Detaljer}"></DataGridTextColumn>
-
+                <!--<DataGridTextColumn Header="Status" Binding="{Binding Path=Status}"></DataGridTextColumn>-->
+                <!--<DataGridTextColumn Header="Detaljer" Binding="{Binding Path=Detaljer}"></DataGridTextColumn>-->
+                <DataGridHyperlinkColumn Header="Avanza" Width="50" Binding="{Binding Path=LinkToAvanza}">
+                    <DataGridHyperlinkColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <EventSetter Event="Hyperlink.Click" Handler="OpenLink"/>
+                        </Style>
+                    </DataGridHyperlinkColumn.ElementStyle>
+                </DataGridHyperlinkColumn>
 
             </DataGrid.Columns>
 
@@ -103,7 +112,7 @@
         <TextBlock Visibility="Hidden" HorizontalAlignment="Left" Margin="10,125,0,0" Text="Uppdat.frekvens" TextWrapping="Wrap" VerticalAlignment="Top" Cursor="Arrow"/>
         <CheckBox Visibility="Hidden" x:Name="combineMultipleSales" Content="Slå ihop affärer" Unchecked="CombineMultipleSales_Unchecked" Checked="CombineMultipleSales_Checked" HorizontalAlignment="Left" Margin="10,254,0,0" VerticalAlignment="Top" Cursor="Arrow"/>
         <TextBlock HorizontalAlignment="Left" Text="   Log                    " TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Height="32" FontSize="18" Cursor="Arrow" Background="#FFEEEEEE" Margin="0,207,0,0"/>
-        <TextBox x:Name="Log" HorizontalAlignment="Left" Margin="0,240,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="192" Height="150" Cursor="Arrow" />
+        <TextBox x:Name="Log" HorizontalAlignment="Left" IsReadOnly="True" Margin="0,240,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="192" Height="150" Cursor="Arrow" />
         <TextBox Visibility="Hidden" x:Name="selcondsDelayInput" HorizontalAlignment="Left" TextChanged="SelcondsDelayInput_TextChanged" TextAlignment="Center" Margin="105,124,0,0" Text="7" TextWrapping="Wrap" VerticalAlignment="Top" Width="59" Cursor="Arrow" PreviewTextInput="PreviewTextInputSecondsDelay"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,162,0,0" Text="Notis från värde" TextWrapping="Wrap" VerticalAlignment="Top" Cursor="Arrow"/>
         <TextBox x:Name="warningValue" TextAlignment="Center" HorizontalAlignment="Left" TextChanged="WarningValueInput_TextChanged" Margin="105,161,0,0" Text="0" TextWrapping="Wrap" AutomationProperties.Name="warningValue" VerticalAlignment="Top" Width="59" Cursor="Arrow" PreviewTextInput="WarningValue_PreviewTextInput"/>
