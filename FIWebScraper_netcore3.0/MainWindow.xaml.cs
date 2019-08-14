@@ -21,7 +21,7 @@ namespace FIWebScraper_netcore3._0
         Scraper scraper;
         PushNotice pushNotice;
         public bool ProgramIsRunning { get; set; } = false;
-        public decimal SecondsDelay { get; set; } = 7000;
+        public decimal SecondsDelay { get; set; } = 1000;
         public static int ValueToWarnOver { get; set; } = 0;
 
         public static StringBuilder ErrorMessages = new StringBuilder();
@@ -45,18 +45,18 @@ namespace FIWebScraper_netcore3._0
 
             //System.Diagnostics.Process.Start("http://www.webpage.com");
 
-
+            //ErrorTextBox.Text = System.IO.Directory.GetCurrentDirectory();
             StartStopProgram();
 
 ////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
             while (ProgramIsRunning)
             {
                 UpdateDataGrid();
-                
 
-                //ListOfSales = scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+
+                ListOfSales = scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
                 //ListOfSales = await Task.Run(() => scraper.ScrapeData(@"http://192.168.1.35/dashboard/"));
-                ListOfSales = scraper.ScrapeData(@"http://localhost/dashboard/");
+                //ListOfSales = scraper.ScrapeData(@"http://localhost/dashboard/");
 
                 if (!NewErrorMessage)
                 {
@@ -155,7 +155,7 @@ namespace FIWebScraper_netcore3._0
         void OpenLink(object sender, RoutedEventArgs e)
         {
             var destination = ((Hyperlink)e.OriginalSource).NavigateUri;
-            Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", destination.ToString());
+            Process.Start(@"C:\Program Files\internet explorer\iexplore.exe", destination.ToString());
             Console.Read();
         }
     }

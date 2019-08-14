@@ -17,7 +17,7 @@ namespace FIWebScraper_netcore3._0
 
 
                     string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    System.IO.Directory.CreateDirectory(@$"{path}\InsynsAffärer\");
+                    System.IO.Directory.CreateDirectory(@$"{path}\Insynsaffärer Loggar\");
 
                     var workSheet = package.Workbook.Worksheets.Add(DateTime.Now.ToShortDateString());
 
@@ -62,9 +62,9 @@ namespace FIWebScraper_netcore3._0
                         workSheet.Cells[rowIndex, 11].Value = entry.Volym;
                         workSheet.Cells[rowIndex, 12].Value = entry.Volymsenhet;
                         workSheet.Cells[rowIndex, 13].Value = entry.Pris;
-                        workSheet.Cells[rowIndex, 14].Value = entry.Antal_Aktier_Varde;
-                        workSheet.Cells[rowIndex, 15].Value = entry.Antal_Aktier_Compared_To_Sale;
-                        workSheet.Cells[rowIndex, 16].Value = entry.Totalt;
+                        workSheet.Cells[rowIndex, 14].Value = entry.Totalt;
+                        workSheet.Cells[rowIndex, 15].Value = entry.Antal_Aktier_Varde;
+                        workSheet.Cells[rowIndex, 16].Value = entry.Antal_Aktier_Compared_To_Sale;
                         workSheet.Cells[rowIndex, 17].Value = entry.Valuta;
                         workSheet.Cells[rowIndex, 18].Value = entry.Handelsplats;
                         workSheet.Cells[rowIndex, 19].Value = entry.LinkToAvanza;
@@ -79,9 +79,10 @@ namespace FIWebScraper_netcore3._0
                     workSheet.Cells[$"N2:N{AllSales.Count + 2}"].Style.Numberformat.Format = "#,##0.00";
                     workSheet.Cells[$"A2:A{AllSales.Count + 2}"].Style.Numberformat.Format = "yyyy-MM-dd";
                     workSheet.Cells[$"J2:J{AllSales.Count + 2}"].Style.Numberformat.Format = "yyyy-MM-dd";
+                    //workSheet.Cells[$"P2:P{AllSales.Count + 2}"].Style.Numberformat.Format = "0:P2";
                     workSheet.Cells.AutoFitColumns(0);
 
-                    var filePath = new FileInfo(@$"{path}\InsynsAffärer\{DateTime.Now.ToShortDateString()}.xlsx");
+                    var filePath = new FileInfo(@$"{path}\Insynsaffärer Loggar\{DateTime.Now.ToShortDateString()}.xlsx");
                     package.SaveAs(filePath);
 
                 }

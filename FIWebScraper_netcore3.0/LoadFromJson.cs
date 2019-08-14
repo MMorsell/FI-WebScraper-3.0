@@ -17,7 +17,6 @@ namespace FIWebScraper_netcore3._0
 
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-
             var filePath = Path.Combine(path, "products.json");
 
             var productData = File.ReadAllText(filePath);

@@ -32,12 +32,12 @@ namespace FIWebScraper_netcore3._0
                     {
                         tbi.TrayBalloonTipClicked += new RoutedEventHandler(BalloonTip_Clicked);
                         string title = "Ny affär hittad!";
-                    string bla = message;
+                        string bla = message;
 
-                    //show balloon with custom icon
-                    tbi.ShowBalloonTip(title, bla, BalloonIcon.Info);
+                        //show balloon with custom icon
+                        tbi.ShowBalloonTip(title, bla, BalloonIcon.Info);
                     }
-                    
+
 
 
                     //var notice = new NotificationContent();
@@ -46,8 +46,8 @@ namespace FIWebScraper_netcore3._0
                     //notice.Type = NotificationType.Information;
 
                     //notificationManager.Show(notice);
-                    //notificationManager.Show(notice, onClick: () => this.WindowState = WindowState.Maximized);
-                    //notificationManager.Show("hello", expirationTime);
+                    ////notificationManager.Show(notice, onClick: () => this.WindowState = WindowState.Maximized);
+                    ////notificationManager.Show("hello", expirationTime);
                     ////notificationManager.Show(notice, "IsThisThingOn", expirationTime, onClick: () => this.WindowState = WindowState.Maximized);
                 }
                 ListOfPopupMessages.Clear();
