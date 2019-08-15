@@ -107,7 +107,6 @@
         <TextBlock HorizontalAlignment="Left" Text="   ErrorLog
                    " TextWrapping="Wrap" VerticalAlignment="Top" Width="155" Height="32" FontSize="18" Cursor="Arrow" Background="#FFEEEEEE" Margin="0,408,0,0"/>
         <TextBlock Visibility="Hidden" HorizontalAlignment="Left" Margin="10,125,0,0" Text="Uppdat.frekvens" TextWrapping="Wrap" VerticalAlignment="Top" Cursor="Arrow"/>
-        <CheckBox Visibility="Hidden" x:Name="combineMultipleSales" Content="Slå ihop affärer" Unchecked="CombineMultipleSales_Unchecked" Checked="CombineMultipleSales_Checked" HorizontalAlignment="Left" Margin="10,254,0,0" VerticalAlignment="Top" Cursor="Arrow"/>
         <TextBlock HorizontalAlignment="Left" Text="   Log                    " TextWrapping="Wrap" VerticalAlignment="Top" Width="155" Height="32" FontSize="18" Cursor="Arrow" Background="#FFEEEEEE" Margin="0,207,0,0"/>
         <TextBox x:Name="Log" HorizontalAlignment="Left" IsReadOnly="True" Margin="0,240,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" Height="150" Cursor="Arrow" />
         <TextBox Visibility="Hidden" x:Name="selcondsDelayInput" HorizontalAlignment="Left" TextChanged="SelcondsDelayInput_TextChanged" TextAlignment="Center" Margin="105,124,0,0" Text="0.7" TextWrapping="Wrap" VerticalAlignment="Top" Width="59" Cursor="Arrow" PreviewTextInput="PreviewTextInputSecondsDelay"/>

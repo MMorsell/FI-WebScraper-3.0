@@ -30,6 +30,7 @@ namespace FIWebScraper_netcore3._0
         public static bool NewErrorMessage;
         public bool CombineMultipleSales { get; set; } = false;
         public static List<Sale> ListOfSales { get; set; }
+        public static bool UpdateGrid;
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +47,7 @@ namespace FIWebScraper_netcore3._0
 
             StartStopProgram();
             UpdateDataGrid();
+            UpdateGrid = false;
             ////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
             while (ProgramIsRunning)
             {
@@ -57,7 +59,6 @@ namespace FIWebScraper_netcore3._0
 
                 if (!NewErrorMessage)
                 {
-                    UpdateDataGrid();
                     RegularMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
                     Log.Text = RegularMessages.ToString();
                 }
@@ -65,6 +66,12 @@ namespace FIWebScraper_netcore3._0
                 {
                     NewErrorMessage = false;
                     ErrorTextBox.Text = ErrorMessages.ToString();
+                }
+
+                if (UpdateGrid)
+                {
+                    UpdateDataGrid();
+                    UpdateGrid = false;
                 }
 
 
@@ -84,31 +91,11 @@ namespace FIWebScraper_netcore3._0
 ////////////////////////////////////////////////////End Primary loop////////////////////////////////////////////////////////////////////////////////////
 
         }
-
-        private void CombineMultipleSales_Checked(object sender, RoutedEventArgs e)
-        {
-            CombineMultipleSales = true;
-            dataGridView1.ItemsSource = null;
-            dataGridView1.ItemsSource = scraper.AllEntries;
-        }
-        private void CombineMultipleSales_Unchecked(object sender, RoutedEventArgs e)
-        {
-            CombineMultipleSales = false;
-            dataGridView1.ItemsSource = null;
-            dataGridView1.ItemsSource = scraper.CombinedSales;
-        }
         private void UpdateDataGrid()
         {
-            if (!CombineMultipleSales)
-            {
-                dataGridView1.ItemsSource = null;
-                dataGridView1.ItemsSource = scraper.AllEntries;
-            }
-            else
-            {
-                dataGridView1.ItemsSource = null;
-                dataGridView1.ItemsSource = scraper.CombinedSales;
-            }
+             dataGridView1.ItemsSource = null;
+             dataGridView1.ItemsSource = scraper.AllEntries;
+            
         }
         private void StartStopProgram()
         {
