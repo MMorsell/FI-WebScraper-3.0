@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using static FIWebScraper_netcore3._0.PushNotice;
 
 namespace FIWebScraper_netcore3._0
@@ -42,14 +43,14 @@ namespace FIWebScraper_netcore3._0
         }
 
 
-        public List<Sale> ScrapeData(string page)
+        public async Task ScrapeData(string page)
         {
             var tempBuilder = new StringBuilder();
             int tempBuilderCount = 0;
             List<string> listOfText = DownloadNewVersion(page);
             if (listOfText == null)
             {
-                return AllEntries.ToList();
+                FIWebScraper_netcore3._0.MainWindow.ListOfSales = AllEntries.ToList();
             }
 
             int nextPost = 0;
@@ -148,7 +149,9 @@ namespace FIWebScraper_netcore3._0
                 FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0, tempBuilder);
             }
 
-            return AllEntries.ToList();
+            FIWebScraper_netcore3._0.MainWindow.ListOfSales = AllEntries.ToList();
+
+
         }
         private List<string> DownloadNewVersion(string page)
         {

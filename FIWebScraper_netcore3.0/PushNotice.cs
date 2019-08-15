@@ -58,8 +58,6 @@ namespace FIWebScraper_netcore3._0
         private void BalloonTip_Clicked(object sender, RoutedEventArgs e)
         {
             Console.Read();
-            Console.Read();
-            Console.Read();
         }
 
         public static void AddNotice(string notice)

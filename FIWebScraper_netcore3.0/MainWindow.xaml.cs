@@ -21,7 +21,7 @@ namespace FIWebScraper_netcore3._0
         Scraper scraper;
         PushNotice pushNotice;
         public bool ProgramIsRunning { get; set; } = false;
-        public decimal SecondsDelay { get; set; } = 1000;
+        public decimal SecondsDelay { get; set; } = 700;
         public static int ValueToWarnOver { get; set; } = 0;
 
         public static StringBuilder ErrorMessages = new StringBuilder();
@@ -29,7 +29,7 @@ namespace FIWebScraper_netcore3._0
 
         public static bool NewErrorMessage;
         public bool CombineMultipleSales { get; set; } = false;
-        public List<Sale> ListOfSales { get; set; }
+        public static List<Sale> ListOfSales { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -43,23 +43,21 @@ namespace FIWebScraper_netcore3._0
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
 
-            //System.Diagnostics.Process.Start("http://www.webpage.com");
 
-            //ErrorTextBox.Text = System.IO.Directory.GetCurrentDirectory();
             StartStopProgram();
-
-////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
+            UpdateDataGrid();
+            ////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
             while (ProgramIsRunning)
             {
-                UpdateDataGrid();
 
 
-                ListOfSales = scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                await scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
                 //ListOfSales = await Task.Run(() => scraper.ScrapeData(@"http://192.168.1.35/dashboard/"));
                 //ListOfSales = scraper.ScrapeData(@"http://localhost/dashboard/");
 
                 if (!NewErrorMessage)
                 {
+                    UpdateDataGrid();
                     RegularMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
                     Log.Text = RegularMessages.ToString();
                 }
