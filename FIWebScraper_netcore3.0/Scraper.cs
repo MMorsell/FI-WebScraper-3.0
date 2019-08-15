@@ -16,6 +16,7 @@ namespace FIWebScraper_netcore3._0
         public int NumberOfSales { get; set; }
         public bool FirstDownload { get; set; } = true;
         public List<StocksIndex> AllStocksIndex { get; set; }
+        public HtmlDocument CurrentDocument { get; set; }
         private LoadFromJson jsonContext;
 
         private ObservableCollection<Sale> _allEntries = new ObservableCollection<Sale>();
@@ -158,6 +159,7 @@ namespace FIWebScraper_netcore3._0
 
             var htmlDocument = webInterface.Load(page);
 
+            //TODO, Add discard update if first sale is the same
             var items = htmlDocument.DocumentNode.SelectSingleNode("//tbody").SelectNodes("//td");
 
             foreach (var item in items)
@@ -174,6 +176,9 @@ namespace FIWebScraper_netcore3._0
             //    FIWebScraper_netcore3._0.MainWindow.NewErrorMessage = true;
             //    return null;
             //}
+            items = null;
+            webInterface = null;
+            htmlDocument = null;
             return ListOfText;
         }
     }
