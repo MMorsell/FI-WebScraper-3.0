@@ -39,6 +39,12 @@ namespace FIWebScraper_netcore3._0
         public async Task ScrapeData(string page)
         {
             List<string> ListOfText = DownloadNewVersion(page);
+            if (ListOfText == null)
+            {
+                FIWebScraper_netcore3._0.MainWindow.ListOfSales = AllEntries.ToList();
+            }
+
+
 
             List<Sale> ListOfPossiblyNewSales = CombindeListOfTextToSales(ListOfText);
 
@@ -81,8 +87,6 @@ namespace FIWebScraper_netcore3._0
                         }
                     } 
                 }
-                
-
 
 
                 if (!saleAlreadyExist)
@@ -154,32 +158,33 @@ namespace FIWebScraper_netcore3._0
 
         private List<string> DownloadNewVersion(string page)
         {
-            var webInterface = new HtmlWeb();
-            List<string> ListOfText = new List<string>();
-
-            var htmlDocument = webInterface.Load(page);
-
-            //TODO, Add discard update if first sale is the same
-            var items = htmlDocument.DocumentNode.SelectSingleNode("//tbody").SelectNodes("//td");
-
-            foreach (var item in items)
+            try
             {
-                ListOfText.Add(System.Net.WebUtility.HtmlDecode(item.InnerText.ToString().Trim()));
+                var webInterface = new HtmlWeb();
+                List<string> ListOfText = new List<string>();
+
+                var htmlDocument = webInterface.Load(page);
+
+                //TODO, Add discard update if first sale is the same
+                var items = htmlDocument.DocumentNode.SelectSingleNode("//tbody").SelectNodes("//td");
+
+                foreach (var item in items)
+                {
+                    ListOfText.Add(System.Net.WebUtility.HtmlDecode(item.InnerText.ToString().Trim()));
+                }
+
+                int validNumberOfSales = ListOfText.Count / 16;
+                items = null;
+                webInterface = null;
+                htmlDocument = null;
+                return ListOfText;
             }
-
-            int validNumberOfSales = ListOfText.Count / 16;
-
-
-            //catch
-            //{
-            //    FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0, $"FEL! internet timeout {DateTime.Now.ToString("HH:mm:ss")}\n");
-            //    FIWebScraper_netcore3._0.MainWindow.NewErrorMessage = true;
-            //    return null;
-            //}
-            items = null;
-            webInterface = null;
-            htmlDocument = null;
-            return ListOfText;
+            catch
+            {
+                FIWebScraper_netcore3._0.MainWindow.ErrorMessages.Insert(0, $"FEL! internet timeout {DateTime.Now.ToString("HH:mm:ss")}\n");
+                FIWebScraper_netcore3._0.MainWindow.NewErrorMessage = true;
+                return null;
+            }
         }
     }
 }

@@ -47,26 +47,29 @@ namespace FIWebScraper_netcore3._0
 
             StartStopProgram();
             UpdateDataGrid();
-            UpdateGrid = false;
+
             ////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
             while (ProgramIsRunning)
             {
 
-
-                await scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                NewErrorMessage = false;
                 //ListOfSales = await Task.Run(() => scraper.ScrapeData(@"http://192.168.1.35/dashboard/"));
                 //ListOfSales = scraper.ScrapeData(@"http://localhost/dashboard/");
-
+                await scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
                 if (!NewErrorMessage)
                 {
-                    RegularMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
-                    Log.Text = RegularMessages.ToString();
+                    Log.Text = $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n";
+                    //RegularMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
+                    //Log.Text = RegularMessages.ToString();
                 }
                 else
                 {
                     NewErrorMessage = false;
                     ErrorTextBox.Text = ErrorMessages.ToString();
                 }
+
+
+
 
                 if (UpdateGrid)
                 {
@@ -75,18 +78,17 @@ namespace FIWebScraper_netcore3._0
                 }
 
 
-                if (ErrorMessages.Length > 10000)
-                {
-                    ErrorMessages.Clear();
-                }
+                //if (ErrorMessages.Length > 10000)
+                //{
+                //    ErrorMessages.Clear();
+                //}
 
 
 
                 pushNotice.CheckForNewMessages(ListOfSales);
 
 
-                int.TryParse(SecondsDelay.ToString(), out int timeout);
-                await Task.Delay(timeout);
+                await Task.Delay(700);
             }
 ////////////////////////////////////////////////////End Primary loop////////////////////////////////////////////////////////////////////////////////////
 
