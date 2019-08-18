@@ -26,5 +26,10 @@ namespace FIWebScraper_netcore3._0
         public string Handelsplats { get; set; }
         public string Status { get; set; } = "0";
         public string Detaljer { get; set; }
+        public string LinkToAvanza { get; set; }
+        public string CompanyName { get; set; }
+        public string KortnamnVarde { get; set; }
+        public string Antal_Aktier_Varde { get; set; }
+        public double Antal_Aktier_Compared_To_Sale { get; set; }
     }
 }
