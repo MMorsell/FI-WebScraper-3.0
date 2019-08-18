@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Notifications.Wpf;
 using System.Text.RegularExpressions;
+using System.Windows.Documents;
+using System.Diagnostics;
 
 namespace FIWebScraper_netcore3._0
 {
@@ -19,7 +21,7 @@ namespace FIWebScraper_netcore3._0
         Scraper scraper;
         PushNotice pushNotice;
         public bool ProgramIsRunning { get; set; } = false;
-        public decimal SecondsDelay { get; set; } = 7000;
+        public decimal SecondsDelay { get; set; } = 700;
         public static int ValueToWarnOver { get; set; } = 0;
 
         public static StringBuilder ErrorMessages = new StringBuilder();
@@ -27,7 +29,9 @@ namespace FIWebScraper_netcore3._0
 
         public static bool NewErrorMessage;
         public bool CombineMultipleSales { get; set; } = false;
-        public List<Sale> ListOfSales { get; set; }
+        public static List<Sale> ListOfSales { get; set; }
+        public static bool UpdateGrid;
+        public ExcelWriter Excel;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,27 +40,42 @@ namespace FIWebScraper_netcore3._0
             ListOfSales = new List<Sale>();
             MainWindow1.Title = "Insynshandelsavläsare";
             NewErrorMessage = false;
+            Excel = new ExcelWriter();
         }
 
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
 
-            StartStopProgram();
 
-////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
+            StartStopProgram();
+            UpdateDataGrid();
+
+            Excel.ReadFromExcel();
+            foreach (var item in ListOfSales)
+            {
+                scraper.AllEntries.Add(item);
+            }
+            UpdateGrid = true;
+            ////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
             while (ProgramIsRunning)
             {
-                UpdateDataGrid();
-                
-
-                //scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
                 //ListOfSales = await Task.Run(() => scraper.ScrapeData(@"http://192.168.1.35/dashboard/"));
-                ListOfSales = scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+                //ListOfSales = scraper.ScrapeData(@"http://localhost/dashboard/");
+                try
+                {
+                    await scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                    //await scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+                }
+                catch
+                {
+
+                }
 
                 if (!NewErrorMessage)
                 {
-                    RegularMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
-                    Log.Text = RegularMessages.ToString();
+                    Log.Text = $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n";
+                    //RegularMessages.Insert(0, $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n");
+                    //Log.Text = RegularMessages.ToString();
                 }
                 else
                 {
@@ -65,48 +84,27 @@ namespace FIWebScraper_netcore3._0
                 }
 
 
-                if (ErrorMessages.Length > 10000)
+
+
+                if (UpdateGrid)
                 {
-                    ErrorMessages.Clear();
+                    UpdateDataGrid();
+                    UpdateGrid = false;
                 }
-
-
 
                 pushNotice.CheckForNewMessages(ListOfSales);
 
 
-                int.TryParse(SecondsDelay.ToString(), out int timeout);
-                await Task.Delay(timeout);
+                await Task.Delay(700);
             }
 ////////////////////////////////////////////////////End Primary loop////////////////////////////////////////////////////////////////////////////////////
 
         }
-      
-
-        private void CombineMultipleSales_Checked(object sender, RoutedEventArgs e)
-        {
-            CombineMultipleSales = true;
-            dataGridView1.ItemsSource = null;
-            dataGridView1.ItemsSource = scraper.AllEntries;
-        }
-        private void CombineMultipleSales_Unchecked(object sender, RoutedEventArgs e)
-        {
-            CombineMultipleSales = false;
-            dataGridView1.ItemsSource = null;
-            dataGridView1.ItemsSource = scraper.CombinedSales;
-        }
         private void UpdateDataGrid()
         {
-            if (!CombineMultipleSales)
-            {
-                dataGridView1.ItemsSource = null;
-                dataGridView1.ItemsSource = scraper.AllEntries;
-            }
-            else
-            {
-                dataGridView1.ItemsSource = null;
-                dataGridView1.ItemsSource = scraper.CombinedSales;
-            }
+             dataGridView1.ItemsSource = null;
+             dataGridView1.ItemsSource = scraper.AllEntries;
+            
         }
         private void StartStopProgram()
         {
@@ -148,5 +146,12 @@ namespace FIWebScraper_netcore3._0
 
             }
         }
+        void OpenLink(object sender, RoutedEventArgs e)
+        {
+            var destination = ((Hyperlink)e.OriginalSource).NavigateUri;
+            Process.Start(@"C:\Program Files\internet explorer\iexplore.exe", destination.ToString());
+            Console.Read();
+        }
     }
 }
+
