@@ -39,6 +39,7 @@ namespace FIWebScraper_netcore3._0
         public async Task ScrapeData(string page)
         {
             List<string> ListOfText = DownloadNewVersion(page);
+            
             if (ListOfText == null)
             {
                 FIWebScraper_netcore3._0.MainWindow.ListOfSales = AllEntries.ToList();
@@ -48,55 +49,78 @@ namespace FIWebScraper_netcore3._0
 
             List<Sale> ListOfPossiblyNewSales = CombindeListOfTextToSales(ListOfText);
 
-            foreach (var sale in ListOfPossiblyNewSales)
+            ListOfPopupMessages.Reverse();
+
+
+            if (FirstDownload)
             {
-                bool saleAlreadyExist = false;
-                foreach (var alreadyAddedSale in AllEntries)
+                foreach (var sale in ListOfPossiblyNewSales)
                 {
-                    if (
-                        sale.Publiceringsdatum == alreadyAddedSale.Publiceringsdatum &&
-                        sale.Utgivare == alreadyAddedSale.Utgivare &&
-                        sale.Namn == alreadyAddedSale.Namn &&
-                        sale.Befattning == alreadyAddedSale.Befattning &&
-                        sale.Karaktär == alreadyAddedSale.Karaktär &&
-                        sale.Transaktionsdatum == alreadyAddedSale.Transaktionsdatum &&
-                        sale.Volym == alreadyAddedSale.Volym &&
-                        sale.Volymsenhet == alreadyAddedSale.Volymsenhet &&
-                        sale.Pris == alreadyAddedSale.Pris &&
-                        sale.Valuta == alreadyAddedSale.Valuta &&
-                        sale.Handelsplats == alreadyAddedSale.Handelsplats
-                        )
+                    bool saleAlreadyExist = false;
+                    saleAlreadyExist = checkIfSaleAlreadyExists(sale, saleAlreadyExist);
+
+
+                    //Adds the extra data - TODO search for new data on avanza here!
+                    if (!saleAlreadyExist)
                     {
-                        saleAlreadyExist = true;
-                        break;
-                    }
-                }
-
-
-
-                if (!saleAlreadyExist)
-                {
-                    foreach (var item in jsonContext.ListOfStocksIndex)
-                    {
-                        if (sale.ISIN == item.ISINVarde)
+                        foreach (var item in jsonContext.ListOfStocksIndex)
                         {
-                            sale.LinkToAvanza = item.LinkToPage;
-                            int.TryParse(item.Antal_Aktier_Varde.ToString(), out int result);
-                            sale.Antal_Affärer = result;
-                            break;
+                            if (sale.ISIN == item.ISINVarde)
+                            {
+                                sale.LinkToAvanza = item.LinkToPage;
+                                int.TryParse(item.Antal_Aktier_Varde.ToString(), out int result);
+                                sale.Antal_Affärer = result;
+                                break;
+                            }
                         }
-                    } 
-                }
-
-
-                if (!saleAlreadyExist)
-                {
-                    AllEntries.Add(sale);
-                    if (sale.Totalt >= MainWindow.ValueToWarnOver)
-                    {
-                        AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris} {sale.Valuta}");
                     }
-                    FIWebScraper_netcore3._0.MainWindow.UpdateGrid = true;
+
+
+                    if (!saleAlreadyExist)
+                    {
+                        AllEntries.Add(sale);
+                        if (sale.Totalt >= MainWindow.ValueToWarnOver)
+                        {
+                            AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris} {sale.Valuta}");
+                        }
+                        FIWebScraper_netcore3._0.MainWindow.UpdateGrid = true;
+                    }
+                }
+                FirstDownload = false;
+            }
+            else
+            {
+                foreach (var sale in ListOfPossiblyNewSales)
+                {
+                    bool saleAlreadyExist = false;
+                    saleAlreadyExist = checkIfSaleAlreadyExists(sale, saleAlreadyExist);
+
+
+                    //Adds the extra data - TODO search for new data on avanza here!
+                    if (!saleAlreadyExist)
+                    {
+                        foreach (var item in jsonContext.ListOfStocksIndex)
+                        {
+                            if (sale.ISIN == item.ISINVarde)
+                            {
+                                sale.LinkToAvanza = item.LinkToPage;
+                                int.TryParse(item.Antal_Aktier_Varde.ToString(), out int result);
+                                sale.Antal_Affärer = result;
+                                break;
+                            }
+                        }
+                    }
+
+
+                    if (!saleAlreadyExist)
+                    {
+                        AllEntries.Insert(0,sale);
+                        if (sale.Totalt >= MainWindow.ValueToWarnOver)
+                        {
+                            AddNotice($"{sale.Namn} har {sale.Karaktär} {sale.Volym} st \ntill kursen {sale.Pris} {sale.Valuta}");
+                        }
+                        FIWebScraper_netcore3._0.MainWindow.UpdateGrid = true;
+                    }
                 }
             }
 
@@ -119,6 +143,32 @@ namespace FIWebScraper_netcore3._0
             //}
 
 
+        }
+
+        private bool checkIfSaleAlreadyExists(Sale sale, bool saleAlreadyExist)
+        {
+            foreach (var alreadyAddedSale in AllEntries)
+            {
+                if (
+                    sale.Publiceringsdatum == alreadyAddedSale.Publiceringsdatum &&
+                    sale.Utgivare == alreadyAddedSale.Utgivare &&
+                    sale.Namn == alreadyAddedSale.Namn &&
+                    sale.Befattning == alreadyAddedSale.Befattning &&
+                    sale.Karaktär == alreadyAddedSale.Karaktär &&
+                    sale.Transaktionsdatum == alreadyAddedSale.Transaktionsdatum &&
+                    sale.Volym == alreadyAddedSale.Volym &&
+                    sale.Volymsenhet == alreadyAddedSale.Volymsenhet &&
+                    sale.Pris == alreadyAddedSale.Pris &&
+                    sale.Valuta == alreadyAddedSale.Valuta &&
+                    sale.Handelsplats == alreadyAddedSale.Handelsplats
+                    )
+                {
+                    saleAlreadyExist = true;
+                    break;
+                }
+            }
+
+            return saleAlreadyExist;
         }
 
         private List<Sale> CombindeListOfTextToSales(List<string> ListOfText)

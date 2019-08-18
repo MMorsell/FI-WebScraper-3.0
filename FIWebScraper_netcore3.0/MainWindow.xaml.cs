@@ -31,6 +31,7 @@ namespace FIWebScraper_netcore3._0
         public bool CombineMultipleSales { get; set; } = false;
         public static List<Sale> ListOfSales { get; set; }
         public static bool UpdateGrid;
+        public ExcelWriter Excel;
         public MainWindow()
         {
             InitializeComponent();
@@ -39,6 +40,7 @@ namespace FIWebScraper_netcore3._0
             ListOfSales = new List<Sale>();
             MainWindow1.Title = "Insynshandelsavläsare";
             NewErrorMessage = false;
+            Excel = new ExcelWriter();
         }
 
         private async void Button1_Click(object sender, RoutedEventArgs e)
@@ -48,14 +50,27 @@ namespace FIWebScraper_netcore3._0
             StartStopProgram();
             UpdateDataGrid();
 
+            Excel.ReadFromExcel();
+            foreach (var item in ListOfSales)
+            {
+                scraper.AllEntries.Add(item);
+            }
+            UpdateGrid = true;
             ////////////////////////////////////////////////////Primary loop////////////////////////////////////////////////////////////////////////////////////
             while (ProgramIsRunning)
             {
-
-                NewErrorMessage = false;
                 //ListOfSales = await Task.Run(() => scraper.ScrapeData(@"http://192.168.1.35/dashboard/"));
                 //ListOfSales = scraper.ScrapeData(@"http://localhost/dashboard/");
-                await scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                //await scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                try
+                {
+                    await scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+                }
+                catch
+                {
+
+                }
+
                 if (!NewErrorMessage)
                 {
                     Log.Text = $"Uppdaterades kl. {DateTime.Now.ToString("HH:mm:ss")}\n";
@@ -76,14 +91,6 @@ namespace FIWebScraper_netcore3._0
                     UpdateDataGrid();
                     UpdateGrid = false;
                 }
-
-
-                //if (ErrorMessages.Length > 10000)
-                //{
-                //    ErrorMessages.Clear();
-                //}
-
-
 
                 pushNotice.CheckForNewMessages(ListOfSales);
 
