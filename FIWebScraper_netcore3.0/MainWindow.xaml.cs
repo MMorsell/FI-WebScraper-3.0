@@ -61,10 +61,10 @@ namespace FIWebScraper_netcore3._0
             {
                 //ListOfSales = await Task.Run(() => scraper.ScrapeData(@"http://192.168.1.35/dashboard/"));
                 //ListOfSales = scraper.ScrapeData(@"http://localhost/dashboard/");
-                //await scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
                 try
                 {
-                    await scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
+                    await scraper.ScrapeData(@"https://marknadssok.fi.se/publiceringsklient");
+                    //await scraper.ScrapeData(@"http://192.168.1.35/dashboard/");
                 }
                 catch
                 {
